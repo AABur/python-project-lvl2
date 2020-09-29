@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "AABur_gendiff"
+version = "0.1.0"
+description = "Generate diff"
+authors = ["AABur <aabur@mail.ru>"]
+repository = "https://github.com/AABur/python-project-lvl2"
+packages = [
+    { include = "gendiff" },
+]
+
+[tool.poetry.scripts]
+gendiff = "gendiff.scripts.gendiff:main"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+commitizen = "^2.4.0"
+wemake-python-styleguide = "^0.14.1"
+pyformat = "^0.7"
+add-trailing-comma = "^2.0.1"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+    "src/__version__.py",
+    "pyproject.toml:version"
+]
+style = [
+    ["qmark", "fg:#ff9d00 bold"],
+    ["question", "bold"],
+    ["answer", "fg:#ff9d00 bold"],
+    ["pointer", "fg:#ff9d00 bold"],
+    ["highlighted", "fg:#ff9d00 bold"],
+    ["selected", "fg:#cc5454"],
+    ["separator", "fg:#cc5454"],
+    ["instruction", ""],
+    ["text", ""],
+    ["disabled", "fg:#858585 italic"]
+]
