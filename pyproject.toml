@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AABur_gendiff"
-version = "0.1.0"
+version = "0.2.0a0"
 description = "Generate diff"
 authors = ["AABur <aabur@mail.ru>"]
 repository = "https://github.com/AABur/python-project-lvl2"
@@ -22,9 +22,8 @@ add-trailing-comma = "^2.0.1"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.0"
+version = "0.2.0a0"
 version_files = [
-    "src/__version__.py",
     "pyproject.toml:version"
 ]
 style = [
