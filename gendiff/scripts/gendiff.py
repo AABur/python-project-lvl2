@@ -11,6 +11,7 @@ def main():
     parser = argparse.ArgumentParser(description='Generate diff.')
     parser.add_argument('first_file', type=argparse.FileType('r'))
     parser.add_argument('second_file', type=argparse.FileType('r'))
+    parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
     print(args.accumulate(args.integers))
 
