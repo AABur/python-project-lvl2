@@ -1,0 +1,8 @@
+# Hexlet.io Python Boilerplate
+*.egg-info
+__pycache__
+dist/
+*.pyc
+.venv/
+# Git Time Metric
+/.gtm/
