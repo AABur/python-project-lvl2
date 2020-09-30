@@ -6,3 +6,5 @@ dist/
 .venv/
 # Git Time Metric
 /.gtm/
+# VS Code
+.vscode/*
