@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 """Generate diff script."""
+# TODO refactoring
 
 
 import argparse
