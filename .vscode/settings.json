@@ -3,6 +3,13 @@
     "python.linting.pylamaEnabled": false,
     "python.linting.enabled": true,
     "cSpell.ignoreWords": [
+        "gendiff",
+        "noqa"
+    ],
+    "python.testing.pytestArgs": [
         "gendiff"
-    ]
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
 }
