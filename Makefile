@@ -2,7 +2,7 @@ install:
 	@poetry install
 
 test:
-	poetry run pytest gendiff tests
+	poetry run pytest gendiff
 
 lint:
 	poetry run flake8 gendiff
