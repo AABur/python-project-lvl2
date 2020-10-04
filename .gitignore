@@ -5,6 +5,6 @@ dist/
 *.pyc
 .venv/
 # Git Time Metric
-/.gtm/
+.gtm/
 # VS Code
-.vscode/*
+.vscode/
