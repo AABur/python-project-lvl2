@@ -1,4 +1,4 @@
-name: CH_CI
+name: CitHub_CI
 
 on:
   - push
