@@ -88,8 +88,6 @@ def collect_data_from_file(file_path):
     with open(file_path) as data_file:
         collected_data = json.load(data_file)
         data_file.close()
-    print(file_path)
-    print(collected_data)
     return collected_data
 
 
