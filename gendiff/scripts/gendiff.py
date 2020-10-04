@@ -1,124 +1,94 @@
 # -*- coding:utf-8 -*-
-# TODO Docstrings
-"""Difference Analyzer.
+"""Generate diff.
 
-[extended_summary]
+Compares two configuration files.
 
-Returns:
-    [type]: [description]
+CLI usage:
+gendiff [-h] [-f FORMAT] first_file second_file
 
-differences = { key: [old_value, new_value] }
-    unchanged   -> old_value == new_value
-    added       -> old_value == None
-    removed     -> new_value == None
-    updated     -> old_value != new_value
+function usage:
+from gendiff import generate_diff
+diff = generate_diff(file_path1, file_path2)
 """
-
 import argparse
 import json
 
 
 def main():
-    """[summary].
+    """Generate diff CLI.
 
-    [extended_summary]
+    CLI usage: gendiff [-h] [-f FORMAT] first_file second_file
     """
     parser = argparse.ArgumentParser(description='Generate diff.')
     parser.add_argument('first_file', type=argparse.FileType('r'))
     parser.add_argument('second_file', type=argparse.FileType('r'))
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
-    old_data = json.load(args.first_file)
-    new_data = json.load(args.second_file)
-    print_diff(compare_data(old_data, new_data))
+    diff = (generate_diff(args.first_file.name, args.second_file.name))
+    print(diff.replace(';', '\n'))
 
 
-def compare_data(old_data, new_data):
-    """[summary].
+def generate_diff(first_file_path, second_file_path):
+    """Generate diff function.
 
-    [extended_summary]
-
-    Args:
-        old_data ([type]): [description]
-        new_data ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-    comparison = {}
-    keys = sorted(old_data.keys() | new_data.keys())
-    for key in keys:
-        comparison[key] = [old_data.get(key), new_data.get(key)]
-    return comparison
-
-
-def generate_diff(file_path1, file_path2):
-    """[summary].
-
-    [extended_summary]
+    Compares two files.
 
     Args:
-        file_path1 ([type]): [description]
-        file_path2 ([type]): [description]
+        first_file_path (str): path to first file for comparison
+        second_file_path (str): path to second file for comparison
 
     Returns:
-        [type]: [description]
+        (str): string with differences
     """
-    diff = compare_data(
-        collect_data_from_file(file_path1),
-        collect_data_from_file(file_path2),
+    combined_data = combine_data(
+        collect_data_from_file(first_file_path),
+        collect_data_from_file(second_file_path),
     )
-    diff_str = ''
-    for key in diff.keys():
-        val1, val2 = diff[key]
+    difference = ''
+    for key in combined_data.keys():
+        val1, val2 = combined_data[key]
         if val1 == val2:
-            diff_str += '  {}: {};'.format(key, val1)
+            difference += '  {}: {};'.format(key, val1)
         elif not val2:
-            diff_str += '- {}: {};'.format(key, val1)
+            difference += '- {}: {};'.format(key, val1)
         elif not val1:
-            diff_str += '+ {}: {};'.format(key, val2)
+            difference += '+ {}: {};'.format(key, val2)
         else:
-            diff_str += '- {}: {};'.format(key, val1)
-            diff_str += '+ {}: {};'.format(key, val2)
-    return diff_str[:-1]
+            difference += '- {}: {};'.format(key, val1)
+            difference += '+ {}: {};'.format(key, val2)
+    return difference[:-1]
+
+
+def combine_data(first_data, second_data):
+    """Combine two dictionaries.
+
+    Args:
+        first_data (dict): first dictionary {key1: value1}
+        second_data (dict): second dictionary {key2: value2}
+
+    Returns:
+        dict: combined dictionary {key: [value1/None, value2/None]}
+    """
+    combined_data = {}
+    keys = sorted(first_data.keys() | second_data.keys())
+    for key in keys:
+        combined_data[key] = [first_data.get(key), second_data.get(key)]
+    return combined_data
 
 
 def collect_data_from_file(file_path):
-    """[summary].
-
-    [extended_summary]
+    """Collect data from json file.
 
     Args:
-        file_path ([type]): [description]
+        file_path (syr): path to file
 
     Returns:
-        [type]: [description]
+        dict: collected data
     """
     with open(file_path) as data_file:
         collected_data = json.load(data_file)
         data_file.close()
     return collected_data
-
-
-def print_diff(diff):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        diff ([type]): [description]
-    """
-    for key in diff.keys():
-        val1, val2 = diff[key]
-        if val1 == val2:
-            print('  {}: {}'.format(key, val1))
-        elif not val2:
-            print('- {}: {}'.format(key, val1))
-        elif not val1:
-            print('+ {}: {}'.format(key, val2))
-        else:
-            print('- {}: {}'.format(key, val1))
-            print('+ {}: {}'.format(key, val2))
 
 
 if __name__ == '__main__':
