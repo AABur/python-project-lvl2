@@ -38,3 +38,4 @@ jobs:
           CC_TEST_REPORTER_ID: 64ab0fdf835b25c4e960b662085959edf7e16561c6586c5ac67aa82cb3f423f4
         with:
           coverageCommand: poetry run coverage xml
+          run: cat coverage.xml  
