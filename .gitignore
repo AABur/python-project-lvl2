@@ -8,3 +8,5 @@ dist/
 .gtm/
 # VS Code
 .vscode/
+.coverage
+.mutmut-cache
