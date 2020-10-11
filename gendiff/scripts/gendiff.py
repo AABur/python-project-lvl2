@@ -33,8 +33,8 @@ def main():
     parser.add_argument('second_file', type=argparse.FileType('r'))
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
-    diff = (generate_diff(args.first_file.name, args.second_file.name, 'str'))
-    print(diff)
+    diff = (generate_diff(args.first_file.name, args.second_file.name, 'dict'))
+    print(json.dumps(diff, indent=4))
 
 
 def generate_diff(first_file_path, second_file_path, output_format='str'):
