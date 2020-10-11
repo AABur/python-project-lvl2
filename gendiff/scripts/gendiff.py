@@ -10,6 +10,7 @@ function usage:
 from gendiff import generate_diff
 diff = generate_diff(file_path1, file_path2)
 """
+# TODO - remove # noqa:
 import argparse
 import json
 import os
@@ -20,6 +21,12 @@ LOADER = {  # noqa:WPS407
     '.json': json.load,
     '.yaml': yaml.safe_load,
     '.yml': yaml.safe_load,
+}
+
+STATUSES = {  # noqa:WPS407
+    'added': '+',
+    'removed': '-',
+    'unchanged': ' ',
 }
 
 
@@ -59,7 +66,7 @@ def generate_diff(first_file_path, second_file_path, output_format='str'):
     return compared
 
 
-def compare(first, second):
+def compare(first, second):  # noqa:C901, WPS231
     """[summary].
 
     [extended_summary]
@@ -73,27 +80,30 @@ def compare(first, second):
     """
     compared = {}
     for key in sorted(first.keys() | second.keys()):
+        first_value = first.get(key)
+        second_value = second.get(key)
         if key in first.keys() - second.keys():
-            compared[key] = {
-                'status': 'removed',
-                'value': first.get(key),
-            }
+            compared.update(
+                {key: {'status': 'removed', 'value': first_value}},
+            )
         if key in second.keys() - first.keys():
-            compared[key] = {
-                'status': 'added',
-                'value': second.get(key),
-            }
+            compared.update(
+                {key: {'status': 'added', 'value': second_value}},
+            )
         if key in first.keys() & second.keys():
-            if first.get(key) == second.get(key):
+            if isinstance(first_value, dict) and isinstance(second_value, dict):
+                compared.update({key: compare(first_value, second_value)})
+                continue
+            if first_value == second_value:
                 compared[key] = {
                     'status': 'unchanged',
-                    'value': first.get(key),
+                    'value': first_value,
                 }
             else:
                 compared[key] = {
                     'status': 'updated',
-                    'old_value': first.get(key),
-                    'new_value': second.get(key),
+                    'old_value': first_value,
+                    'new_value': second_value,
                 }
     return compared
 
