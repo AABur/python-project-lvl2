@@ -28,7 +28,7 @@ def generate_diff(first_file_path, second_file_path, output_format='str'):
     return compared
 
 
-def compare(first, second):  # noqa:C901
+def compare(first, second):
     """[summary].
 
     [extended_summary]

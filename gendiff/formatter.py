@@ -3,6 +3,9 @@
 
 [extended_summary]
 """
+LF_CH = '\n'
+HT_CH = ' '
+INDENT_STEP = 4
 
 
 def get_status_sign(status):
@@ -24,7 +27,7 @@ def get_status_sign(status):
     }.get(status, '')
 
 
-def render(source, indent=0):  # noqa:WPS210
+def render(source, indent=0):
     """[summary].
 
     [extended_summary]
@@ -36,10 +39,7 @@ def render(source, indent=0):  # noqa:WPS210
     Returns:
         [type]: [description]
     """
-    lf_ch = '\n'
-    ht_ch = ' '
-    indent_step = 4
-    nl_ch = lf_ch + ht_ch * (indent + indent_step)
+    nl_ch = LF_CH + HT_CH * (indent + INDENT_STEP)
     if isinstance(source, dict):
         output_items = []
         for key in source:
@@ -54,11 +54,11 @@ def render(source, indent=0):  # noqa:WPS210
                     nl_ch,
                     get_status_sign(status),
                     key,
-                    render(output_value, indent + indent_step),
+                    render(output_value, indent + INDENT_STEP),
                 ),
             )
         return '{{{}}}'.format(
-            ''.join(output_items) + lf_ch + ht_ch * indent,
+            ''.join(output_items) + LF_CH + HT_CH * indent,
         )
     return source
 
