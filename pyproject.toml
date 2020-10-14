@@ -9,7 +9,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-gendiff = "gendiff.scripts.gendiff:main"
+gendiff = "gendiff.scripts.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -23,6 +23,7 @@ add-trailing-comma = "^2.0.1"
 pytest-cov = "^2.10.1"
 pytest = "^6.1.1"
 coverage = "^5.3"
+rope = "^0.18.0"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
