@@ -17,6 +17,40 @@ import os
 import yaml
 
 
+def get_loader(loader):
+    """[summary].
+
+    [extended_summary]
+
+    Args:
+        loader ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    return {
+        '.json': json.load,
+        '.yaml': yaml.safe_load,
+        '.yml': yaml.safe_load,
+    }.get(loader)
+
+
+def colollect_data(file_path):
+    """Collect data from json file.
+
+    Args:
+        file_path (syr): path to file
+
+    Returns:
+        dict: collected data
+    """
+    with open(file_path) as data_file:
+        _, ext = os.path.splitext(file_path)
+        collected = get_loader(ext)(data_file)
+        data_file.close()
+    return collected
+
+
 def main():
     """Generate diff CLI.
 
@@ -45,8 +79,8 @@ def generate_diff(first_file_path, second_file_path, output_format='str'):
         (str): output_format='str'
         (dic): {key:{status}}
     """
-    first = collect_from_file(first_file_path)
-    second = collect_from_file(second_file_path)
+    first = colollect_data(first_file_path)
+    second = colollect_data(second_file_path)
     compared = compare(first, second)
     if output_format == 'str':
         return str(compared)
@@ -99,22 +133,6 @@ def compare(first, second):  # noqa:C901
                     },
                 )
     return compared
-
-
-def collect_from_file(file_path):
-    """Collect data from json file.
-
-    Args:
-        file_path (syr): path to file
-
-    Returns:
-        dict: collected data
-    """
-    with open(file_path) as data_file:
-        _, ext = os.path.splitext(file_path)
-        collected = get_loader(ext)(data_file)
-        data_file.close()
-    return collected
 
 
 def flatten(nested):
@@ -176,24 +194,6 @@ def render(source, indent=0):  # noqa:WPS210
             ''.join(output_items) + lf_char + ht_char * indent,
         )
     return source
-
-
-def get_loader(loader):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        loader ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-    return {
-        '.json': json.load,
-        '.yaml': yaml.safe_load,
-        '.yml': yaml.safe_load,
-    }.get(loader)
 
 
 STATUSES = {  # noqa:WPS407

@@ -1,6 +1,6 @@
 """Generate diff tests."""
 
-from gendiff.scripts.gendiff import collect_from_file, generate_diff
+from gendiff.scripts.gendiff import colollect_data, generate_diff
 
 first_json = 'gendiff/tests/fixtures/file1.json'
 second_json = 'gendiff/tests/fixtures/file2.json'
@@ -17,4 +17,4 @@ def test_generate_diff():
 def test_collect_from_file():
     """Test - collect."""
     test = {'timeout': 20, 'verbose': True, 'host': 'hexlet.io'}
-    assert collect_from_file(second_json) == test
+    assert colollect_data(second_json) == test
