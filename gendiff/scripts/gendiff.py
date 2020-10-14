@@ -10,24 +10,11 @@ function usage:
 from gendiff import generate_diff
 diff = generate_diff(file_path1, file_path2)
 """
-# TODO - remove # noqa:
 import argparse
 import json
 import os
 
 import yaml
-
-LOADER = {  # noqa:WPS407
-    '.json': json.load,
-    '.yaml': yaml.safe_load,
-    '.yml': yaml.safe_load,
-}
-
-STATUSES = {  # noqa:WPS407
-    'added': '+',
-    'removed': '-',
-    'unchanged': ' ',
-}
 
 
 def main():
@@ -41,7 +28,7 @@ def main():
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
     diff = (generate_diff(args.first_file.name, args.second_file.name, 'dict'))
-    print(json.dumps(diff, indent=4))
+    print(render(diff))
 
 
 def generate_diff(first_file_path, second_file_path, output_format='str'):
@@ -66,7 +53,7 @@ def generate_diff(first_file_path, second_file_path, output_format='str'):
     return compared
 
 
-def compare(first, second):  # noqa:C901, WPS231
+def compare(first, second):  # noqa:C901
     """[summary].
 
     [extended_summary]
@@ -92,19 +79,25 @@ def compare(first, second):  # noqa:C901, WPS231
             )
         if key in first.keys() & second.keys():
             if isinstance(first_value, dict) and isinstance(second_value, dict):
-                compared.update({key: compare(first_value, second_value)})
+                compared.update(
+                    {key: compare(first_value, second_value)},
+                )
                 continue
             if first_value == second_value:
-                compared[key] = {
-                    'status': 'unchanged',
-                    'value': first_value,
-                }
+                compared.update(
+                    {key: {'status': 'unchanged', 'value': first_value}},
+                )
             else:
-                compared[key] = {
-                    'status': 'updated',
-                    'old_value': first_value,
-                    'new_value': second_value,
-                }
+                compared.update(
+                    {
+                        key:
+                        {
+                            'status': 'updated',
+                            'old_value': first_value,
+                            'new_value': second_value,
+                        },
+                    },
+                )
     return compared
 
 
@@ -119,7 +112,7 @@ def collect_from_file(file_path):
     """
     with open(file_path) as data_file:
         _, ext = os.path.splitext(file_path)
-        collected = LOADER.get(ext)(data_file)
+        collected = get_loader(ext)(data_file)
         data_file.close()
     return collected
 
@@ -145,6 +138,70 @@ def flatten(nested):
         else:
             flatted[k1] = v1
     return flatted
+
+
+def render(source, indent=0):  # noqa:WPS210
+    """[summary].
+
+    [extended_summary]
+
+    Args:
+        source ([type]): [description]
+        indent (int, optional): [description]. Defaults to 0.
+
+    Returns:
+        [type]: [description]
+    """
+    lf_char = '\n'
+    ht_char = ' '
+    nlch = lf_char + ht_char * (indent + 4)
+    if isinstance(source, dict):
+        output_items = []
+        for key in source:
+            output_value = source.get(key)
+            status = output_value.get('status', '') if isinstance(
+                output_value, dict,
+            ) else ''
+            if status:
+                output_value = output_value.get('value')
+            output_items.append(
+                '{}{}{}: {}'.format(
+                    nlch,
+                    STATUSES.get(status, ''),
+                    key,
+                    render(output_value, indent + 4),
+                ),
+            )
+        return '{{{}}}'.format(
+            ''.join(output_items) + lf_char + ht_char * indent,
+        )
+    return source
+
+
+def get_loader(loader):
+    """[summary].
+
+    [extended_summary]
+
+    Args:
+        loader ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    return {
+        '.json': json.load,
+        '.yaml': yaml.safe_load,
+        '.yml': yaml.safe_load,
+    }.get(loader)
+
+
+STATUSES = {  # noqa:WPS407
+    'added': '+ ',
+    'removed': '- ',
+    'unchanged': '  ',
+    'updated': '+-',
+}
 
 
 if __name__ == '__main__':
