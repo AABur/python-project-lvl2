@@ -39,25 +39,73 @@ def render(source, indent=0):
     Returns:
         [type]: [description]
     """
-    nl_ch = LF_CH + HT_CH * (indent + INDENT_STEP)
     if isinstance(source, dict):
         output_items = []
         for key in source:
-            output_value = source.get(key)
-            status = output_value.get('status', '') if isinstance(
-                output_value, dict,
+            source_value = source.get(key)
+            status = source_value.get('status', '') if isinstance(
+                source_value, dict,
             ) else ''
-            if status:
-                output_value = output_value.get('value')
+            new_indent = indent + INDENT_STEP
+            if status == 'updated':
+                output_items.append(
+                    new_item(
+                        key,
+                        'removed',
+                        source_value.get('value'),
+                        new_indent,
+                    ),
+                )
+                output_items.append(
+                    new_item(
+                        key,
+                        'added',
+                        source_value.get('updated_value'),
+                        new_indent,
+                    ),
+                )
+                continue
+            elif status != '':
+                output_items.append(
+                    new_item(
+                        key,
+                        status,
+                        source_value.get('value'),
+                        new_indent,
+                    ),
+                )
+                continue
             output_items.append(
-                '{}{}{}: {}'.format(
-                    nl_ch,
-                    get_status_sign(status),
+                new_item(
                     key,
-                    render(output_value, indent + INDENT_STEP),
+                    status,
+                    source_value,
+                    new_indent,
                 ),
             )
         return '{{{}}}'.format(
             ''.join(output_items) + LF_CH + HT_CH * indent,
         )
     return source
+
+
+def new_item(key, status, new_value, indent):
+    """[summary].
+
+    [extended_summary]
+
+    Args:
+        key ([type]): [description]
+        status ([type]): [description]
+        new_value ([type]): [description]
+        indent ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    return '{}{}{}: {}'.format(
+        LF_CH + HT_CH * indent,
+        get_status_sign(status),
+        key,
+        render(new_value, indent),
+    )

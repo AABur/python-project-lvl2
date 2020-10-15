@@ -44,8 +44,8 @@ def compare(first, second):
     for key in sorted(first.keys() | second.keys()):
         first_value = first.get(key)
         second_value = second.get(key)
-        compared.update(collect_changes('added', key, first, second))
-        compared.update(collect_changes('removed', key, first, second))
+        removed(key, first, second, compared, first_value)
+        added(key, second, first, compared, second_value)
         if key in first.keys() & second.keys():
             if isinstance(first_value, dict) and isinstance(second_value, dict):
                 compared.update(
@@ -70,31 +70,37 @@ def compare(first, second):
     return compared
 
 
-def collect_changes(status, key, first, second):
+def removed(key, first, second, compared, first_value):
     """[summary].
 
     [extended_summary]
 
     Args:
-        status ([type]): [description]
         key ([type]): [description]
         first ([type]): [description]
         second ([type]): [description]
-
-    Returns:
-        [type]: [description]
+        compared ([type]): [description]
+        first_value ([type]): [description]
     """
-    return {
-        'added': {
-            key: {
-                'status': 'added',
-                'value': second.get(key),
-            },
-        } if key in second.keys() - first.keys() else '',
-        'removed': {
-            key: {
-                'status': 'removed',
-                'value': first.get(key),
-            },
-        } if key in first.keys() - second.keys() else '',
-    }.get(status)
+    if key in first.keys() - second.keys():
+        compared.update(
+            {key: {'status': 'removed', 'value': first_value}},
+        )
+
+
+def added(key, second, first, compared, second_value):
+    """[summary].
+
+    [extended_summary]
+
+    Args:
+        key ([type]): [description]
+        second ([type]): [description]
+        first ([type]): [description]
+        compared ([type]): [description]
+        second_value ([type]): [description]
+    """
+    if key in second.keys() - first.keys():
+        compared.update(
+            {key: {'status': 'added', 'value': second_value}},
+        )
