@@ -61,26 +61,3 @@ def render(source, indent=0):
             ''.join(output_items) + LF_CH + HT_CH * indent,
         )
     return source
-
-
-def flatten(nested):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        nested (dict): [description]
-
-    Returns:
-        (dict): [description]
-    """
-    flatted = {}
-    for k1, v1 in nested.items():
-        if isinstance(v1, dict):
-            if not v1:
-                flatted[k1] = ''
-            for k2, v2 in flatten(v1).items():
-                flatted['{0}/{1}'.format(k1, k2)] = v2
-        else:
-            flatted[k1] = v1
-    return flatted
