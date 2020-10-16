@@ -13,7 +13,8 @@ diff = generate_diff(file_path1, file_path2)
 import argparse
 
 from gendiff.comparator import generate_diff
-from gendiff.formatter import render
+from gendiff.format_json import render
+from gendiff.formatt_plane import flatten
 
 
 def main():
@@ -28,6 +29,8 @@ def main():
     args = parser.parse_args()
     diff = (generate_diff(args.first_file.name, args.second_file.name, 'dict'))
     print(render(diff))
+    print('-----------')
+    print(flatten(diff))
 
 
 if __name__ == '__main__':
