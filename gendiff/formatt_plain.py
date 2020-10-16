@@ -29,43 +29,6 @@ def flatten(nested):
     return flatted
 
 
-def get_added(v1):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        v1 ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-    added_value = '[complex value]' if isinstance(
-        v1.get('value'), dict,
-    ) else v1.get('value')
-    return ('added', repr(added_value))
-
-
-def get_updated(v1):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        v1 ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
-    updated_from = '[complex value]' if isinstance(
-        v1.get('value'), dict,
-    ) else v1.get('value')
-    updated_to = '[complex value]' if isinstance(
-        v1.get('updated_value'), dict,
-    ) else v1.get('updated_value')
-    return ('updated', repr(updated_from), repr(updated_to))
-
-
 def get_value(status, v1):
     """[summary].
 
@@ -78,9 +41,15 @@ def get_value(status, v1):
     Returns:
         [type]: [description]
     """
-    return {
-        'added': get_added(v1),
-        'removed': ('removed',),
-        'updated': get_updated(v1),
-        'unchanged': ('unchanged',),
-    }.get(status)
+    if status != 'updated':
+        added_value = '[complex value]' if isinstance(
+            v1.get('value'), dict,
+        ) else v1.get('value')
+        return (status, repr(added_value))
+    updated_from = '[complex value]' if isinstance(
+        v1.get('value'), dict,
+    ) else v1.get('value')
+    updated_to = '[complex value]' if isinstance(
+        v1.get('updated_value'), dict,
+    ) else v1.get('updated_value')
+    return ('updated', repr(updated_from), repr(updated_to))
