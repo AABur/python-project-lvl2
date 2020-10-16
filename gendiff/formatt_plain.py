@@ -43,7 +43,7 @@ def get_added(v1):
     added_value = '[complex value]' if isinstance(
         v1.get('value'), dict,
     ) else v1.get('value')
-    return 'was added with value: {0}'.format(repr(added_value))
+    return ('added', repr(added_value))
 
 
 def get_updated(v1):
@@ -63,9 +63,7 @@ def get_updated(v1):
     updated_to = '[complex value]' if isinstance(
         v1.get('updated_value'), dict,
     ) else v1.get('updated_value')
-    return 'was updated. From {0} to {1}'.format(
-        repr(updated_from), repr(updated_to),
-    )
+    return ('updated', repr(updated_from), repr(updated_to))
 
 
 def get_value(status, v1):
@@ -82,7 +80,7 @@ def get_value(status, v1):
     """
     return {
         'added': get_added(v1),
-        'removed': 'was removed',
+        'removed': ('removed',),
         'updated': get_updated(v1),
-        'unchanged': 'was unchanged',
+        'unchanged': ('unchanged',),
     }.get(status)
