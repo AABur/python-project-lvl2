@@ -12,7 +12,7 @@ diff = generate_diff(file_path1, file_path2)
 """
 import argparse
 
-from gendiff.evaluator import generate_diff
+from gendiff.comparator import generate_diff
 from gendiff.formatter import render
 
 

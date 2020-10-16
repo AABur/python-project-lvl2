@@ -1,7 +1,7 @@
 """Generate diff tests."""
 
 
-from gendiff.evaluator import generate_diff
+from gendiff.comparator import generate_diff
 from gendiff.loader import collect_data
 
 first_json = 'gendiff/tests/fixtures/file1.json'
