@@ -14,7 +14,7 @@ import argparse
 
 from gendiff.comparator import generate_diff
 from gendiff.format_json import render
-from gendiff.formatt_plane import flatten
+from gendiff.formatt_plain import flatten
 
 
 def main():
