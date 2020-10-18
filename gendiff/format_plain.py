@@ -3,11 +3,14 @@
 
 [extended_summary]
 """
-STATUS = 'status'
-VALUE = 'value'
-COMPLEX_VALUE = '[complex value]'
-UPDATED = 'updated'
-UPDATED_VALUE = 'updated_value'
+
+from gendiff.common_values import (
+    COMPLEX_VALUE,
+    STATUS,
+    UPDATED,
+    UPDATED_VALUE,
+    VALUE,
+)
 
 
 def renderer(source):
