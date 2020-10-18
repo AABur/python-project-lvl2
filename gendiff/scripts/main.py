@@ -14,7 +14,7 @@ import argparse
 
 from gendiff.comparator import generate_diff
 from gendiff.format_json import render
-from gendiff.formatt_plain import flatten
+from gendiff.format_plain import renderer
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
     diff = (generate_diff(args.first_file.name, args.second_file.name, 'dict'))
     print(render(diff))
     print('-----------')
-    print(flatten(diff))
+    print(renderer(diff))
 
 
 if __name__ == '__main__':
