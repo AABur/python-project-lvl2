@@ -18,7 +18,7 @@ from gendiff.format_plain import print_plain, renderer
 from gendiff.format_structured import render
 
 
-def main():  # noqa:WPS213
+def main():
     """Generate diff CLI.
 
     CLI usage: gendiff [-h] [-f FORMAT] first_file second_file
@@ -29,12 +29,10 @@ def main():  # noqa:WPS213
     parser.add_argument(
         'first_file',
         help='first file to compare',
-        type=argparse.FileType('r'),
     )
     parser.add_argument(
         'second_file',
         help='second file to compare',
-        type=argparse.FileType('r'),
     )
     parser.add_argument(
         '-f',
@@ -42,10 +40,10 @@ def main():  # noqa:WPS213
         type=str,
         choices=('structured', 'plain', 'json'),
         default='structured',
-        help='set output format',
+        help='set output format (default: structured)',
     )
     args = parser.parse_args()
-    diff = (generate_diff(args.first_file.name, args.second_file.name))
+    diff = (generate_diff(args.first_file, args.second_file))
     if args.format == 'plain':
         print(print_plain(renderer(diff)))
     elif args.format == 'json':
