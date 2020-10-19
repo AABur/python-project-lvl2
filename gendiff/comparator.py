@@ -19,23 +19,27 @@ def generate_diff(old_file_path, new_file_path):
     return compare(old, new)
 
 
-def compare(old, new):
+def compare(old, new):  # noqa:WPS210
     compared = {}
     compared_value = {}
-    for key in sorted(old.keys() | new.keys()):
+    keys_union = sorted(old.keys() | new.keys())
+    keys_removed = old.keys() - new.keys()
+    keys_added = new.keys() - old.keys()
+    keys_intersection = old.keys() & new.keys()
+    for key in keys_union:
         old_value = old.get(key)
         new_value = new.get(key)
-        if key in old.keys() - new.keys():
+        if key in keys_removed:
             compared_value = {
                 STATUS: REMOVED,
                 VALUE: old_value,
             }
-        if key in new.keys() - old.keys():
+        if key in keys_added:
             compared_value = {
                 STATUS: ADDED,
                 VALUE: new_value,
             }
-        if key in old.keys() & new.keys():
+        if key in keys_intersection:
             compared_value = compare_same_keys(old_value, new_value)
         compared[key] = compared_value
     return compared
