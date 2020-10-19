@@ -31,9 +31,10 @@ def print_plain(source):  # noqa:WPS231
     Returns:
         [type]: [description]
     """
+    flatted = renderer(source)
     plain = EMPTY_STR
     str_str = EMPTY_STR
-    for k1, v1 in source.items():
+    for k1, v1 in flatted.items():
         if v1[0] == ADDED:
             str_str = ADDED_STR.format(k1, v1[1])
         elif v1[0] == REMOVED:

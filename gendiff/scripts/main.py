@@ -14,7 +14,7 @@ import argparse
 import json
 
 from gendiff.comparator import generate_diff
-from gendiff.format_plain import print_plain, renderer
+from gendiff.format_plain import print_plain
 from gendiff.format_structured import render
 
 
@@ -45,7 +45,7 @@ def main():
     args = parser.parse_args()
     diff = (generate_diff(args.first_file, args.second_file))
     if args.format == 'plain':
-        print(print_plain(renderer(diff)))
+        print(print_plain(diff))
     elif args.format == 'json':
         print(json.dumps(diff))
     else:
