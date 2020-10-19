@@ -14,8 +14,8 @@ import argparse
 import json
 
 from gendiff.comparator import generate_diff
-from gendiff.format_json import render
 from gendiff.format_plain import print_plain, renderer
+from gendiff.format_structured import render
 
 
 def main():  # noqa:WPS213
