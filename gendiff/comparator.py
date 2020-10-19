@@ -15,7 +15,7 @@ from gendiff.common_values import (
 from gendiff.loader import collect_data
 
 
-def generate_diff(old_file_path, new_file_path, output_format='str'):
+def generate_diff(old_file_path, new_file_path):
     """[summary].
 
     [extended_summary]
@@ -23,17 +23,13 @@ def generate_diff(old_file_path, new_file_path, output_format='str'):
     Args:
         old_file_path ([type]): [description]
         new_file_path ([type]): [description]
-        output_format (str, optional): [description]. Defaults to 'str'.
 
     Returns:
         [type]: [description]
     """
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)
-    compared = compare(old, new)
-    if output_format == 'str':
-        return str(compared)
-    return compared
+    return compare(old, new)
 
 
 def compare(old, new):

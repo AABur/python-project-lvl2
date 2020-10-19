@@ -15,7 +15,7 @@ import json
 
 from gendiff.comparator import generate_diff
 from gendiff.format_json import render
-from gendiff.format_plain import renderer
+from gendiff.format_plain import print_plain, renderer
 
 
 def main():  # noqa:WPS213
@@ -26,15 +26,17 @@ def main():  # noqa:WPS213
     parser = argparse.ArgumentParser(description='Generate diff.')
     parser.add_argument('first_file', type=argparse.FileType('r'))
     parser.add_argument('second_file', type=argparse.FileType('r'))
-    parser.add_argument('-f', '--format', help='set format of output')
+    parser.add_argument(
+        '-f', '--format', help='set format of output: "plain", "json"',
+    )
     args = parser.parse_args()
-    diff = (generate_diff(args.first_file.name, args.second_file.name, 'dict'))
-    print('structured')
-    print(render(diff))
-    print('plain')
-    print(renderer(diff))
-    print('json')
-    print(json.dumps(diff))
+    diff = (generate_diff(args.first_file.name, args.second_file.name))
+    if args.format == 'plain':
+        print(print_plain(renderer(diff)))
+    elif args.format == 'json':
+        print(json.dumps(diff))
+    else:
+        print(render(diff))
 
 
 if __name__ == '__main__':
