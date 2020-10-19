@@ -23,11 +23,26 @@ def main():  # noqa:WPS213
 
     CLI usage: gendiff [-h] [-f FORMAT] first_file second_file
     """
-    parser = argparse.ArgumentParser(description='Generate diff.')
-    parser.add_argument('first_file', type=argparse.FileType('r'))
-    parser.add_argument('second_file', type=argparse.FileType('r'))
+    parser = argparse.ArgumentParser(
+        description='Generate difference of two JSON or YAML files.',
+    )
     parser.add_argument(
-        '-f', '--format', help='set format of output: "plain", "json"',
+        'first_file',
+        help='first file to compare',
+        type=argparse.FileType('r'),
+    )
+    parser.add_argument(
+        'second_file',
+        help='second file to compare',
+        type=argparse.FileType('r'),
+    )
+    parser.add_argument(
+        '-f',
+        '--format',
+        type=str,
+        choices=('structured', 'plain', 'json'),
+        default='structured',
+        help='set output format',
     )
     args = parser.parse_args()
     diff = (generate_diff(args.first_file.name, args.second_file.name))
