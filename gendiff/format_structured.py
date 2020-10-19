@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
-"""[summary].
+"""Generating structured text otput."""
 
-[extended_summary]
-"""
 from gendiff.common_values import (
     ADDED,
     REMOVED,
@@ -19,16 +17,6 @@ EMPTY = ''
 
 
 def get_status_sign(status):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        status ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     return {
         'added': '+ ',
         'removed': '- ',
@@ -38,17 +26,6 @@ def get_status_sign(status):
 
 
 def render(source, indent=0):  # noqa:WPS231
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        source ([type]): [description]
-        indent (int, optional): [description]. Defaults to 0.
-
-    Returns:
-        [type]: [description]
-    """
     if isinstance(source, dict):
         output_items = []
         for key in source:
@@ -100,19 +77,6 @@ def render(source, indent=0):  # noqa:WPS231
 
 
 def new_item(key, status, new_value, indent):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        key ([type]): [description]
-        status ([type]): [description]
-        new_value ([type]): [description]
-        indent ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     return '{0}{1}{2}: {3}'.format(
         LF_CH + HT_CH * indent,
         get_status_sign(status),

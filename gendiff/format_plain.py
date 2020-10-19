@@ -1,8 +1,5 @@
 # -*- coding:utf-8 -*-
-"""[summary].
-
-[extended_summary]
-"""
+"""Generating plain text otput."""
 
 from gendiff.common_values import (
     ADDED,
@@ -21,16 +18,6 @@ EMPTY_STR = ''
 
 
 def print_plain(source):  # noqa:WPS231
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        source ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     flatted = renderer(source)
     plain = EMPTY_STR
     str_str = EMPTY_STR
@@ -48,16 +35,6 @@ def print_plain(source):  # noqa:WPS231
 
 
 def renderer(source):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        source ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     flatted = {}
     for k1, v1 in source.items():
         if isinstance(v1, dict):
@@ -72,17 +49,6 @@ def renderer(source):
 
 
 def get_value(status, v1):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        status ([type]): [description]
-        v1 ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     if status != UPDATED:
         added_value = COMPLEX_VALUE if isinstance(
             v1.get(VALUE), dict,

@@ -1,11 +1,5 @@
 # -*- coding:utf-8 -*-
-"""[summary].
-
-[extended_summary]
-
-Returns:
-    [type]: [description]
-"""
+"""Operations with files."""
 
 import json
 import os
@@ -14,15 +8,15 @@ import yaml
 
 
 def get_loader(loader):
-    """[summary].
+    """Call data loader.
 
-    [extended_summary]
+    Call the loader according to the file extension
 
     Args:
-        loader ([type]): [description]
+        loader (str): file extention
 
     Returns:
-        [type]: [description]
+        fucnction: file loader
     """
     return {
         '.json': json.load,
@@ -32,16 +26,15 @@ def get_loader(loader):
 
 
 def collect_data(file_path):
-    """Collect data from json file.
+    """Collect data from file.
 
     Args:
-        file_path (syr): path to file
+        file_path (str): path to JSON or YAML file
 
     Returns:
-        dict: collected data
+        (dict): decoded data
     """
     with open(file_path) as data_file:
         _, ext = os.path.splitext(file_path)
         collected = get_loader(ext)(data_file)
-        data_file.close()
     return collected

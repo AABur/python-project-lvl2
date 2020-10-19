@@ -1,8 +1,5 @@
 # -*- coding:utf-8 -*-
-"""[summary].
-
-[extended_summary]
-"""
+"""Common values for all modules."""
 
 STATUS = 'status'
 VALUE = 'value'

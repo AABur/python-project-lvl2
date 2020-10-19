@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
-"""[summary].
+"""Calculate differnce."""
 
-[extended_summary]
-"""
 from gendiff.common_values import (
     ADDED,
     REMOVED,
@@ -16,34 +14,12 @@ from gendiff.loader import collect_data
 
 
 def generate_diff(old_file_path, new_file_path):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        old_file_path ([type]): [description]
-        new_file_path ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)
     return compare(old, new)
 
 
 def compare(old, new):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        old ([type]): [description]
-        new ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     compared = {}
     compared_value = {}
     for key in sorted(old.keys() | new.keys()):
@@ -66,17 +42,6 @@ def compare(old, new):
 
 
 def compare_same_keys(old_value, new_value):
-    """[summary].
-
-    [extended_summary]
-
-    Args:
-        old_value ([type]): [description]
-        new_value ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     if old_value == new_value:
         return {
             STATUS: UNCHANGED,
