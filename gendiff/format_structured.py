@@ -52,7 +52,7 @@ def render(source, indent=0):  # noqa:WPS231
                     ),
                 )
                 continue
-            elif status != EMPTY:
+            if status != EMPTY:
                 output_items.append(
                     new_item(
                         key,
