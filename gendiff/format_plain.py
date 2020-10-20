@@ -14,23 +14,26 @@ from gendiff.common_values import (
 ADDED_STR = 'Property {0} was added with value: {1}'
 REMOVED_STR = 'Property {0} was removed'
 UPDATED_STR = 'Property {0} was updated. From {1} to {2}'
-EMPTY_STR = ''
 
 
-def print_plain(source):  # noqa:WPS231
-    flatted = renderer(source)
-    plain = EMPTY_STR
-    str_str = EMPTY_STR
-    for k1, v1 in flatted.items():
-        if v1[0] == ADDED:
-            str_str = ADDED_STR.format(k1, v1[1])
-        elif v1[0] == REMOVED:
-            str_str = REMOVED_STR.format(k1)
-        elif v1[0] == UPDATED:
-            str_str = UPDATED_STR.format(k1, v1[1], v1[2])
-        else:
+def print_plain(source):
+    patterns = {
+        ADDED: ADDED_STR,
+        REMOVED: REMOVED_STR,
+        UPDATED: UPDATED_STR,
+    }
+    plain = ''
+    for key, key_value in renderer(source).items():
+        status = key_value[0]
+        if status not in patterns.keys():
             continue
-        plain = ' '.join([plain, str_str, '\n'])
+        plain = ' '.join(
+            [
+                plain,
+                patterns[status].format(key, *key_value),
+                '\n',
+            ],
+        )
     return plain
 
 
@@ -38,8 +41,8 @@ def renderer(source):
     flatted = {}
     for k1, v1 in source.items():
         if isinstance(v1, dict):
-            if v1.get(STATUS, EMPTY_STR):
-                flatted[k1] = get_value(v1.get(STATUS, EMPTY_STR), v1)
+            if v1.get(STATUS):
+                flatted[k1] = get_value(v1.get(STATUS), v1)
             else:
                 for k2, v2 in renderer(v1).items():
                     flatted['{0}.{1}'.format(k1, k2)] = v2
