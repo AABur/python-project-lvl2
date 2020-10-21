@@ -1,0 +1,11 @@
+Property common.follow was added with value: added
+ Property common.setting2 was removed
+ Property common.setting3 was updated. From updated to True
+ Property common.setting4 was added with value: added
+ Property common.setting5 was added with value: added
+ Property common.setting6.doge.wow was updated. From updated to 'too much'
+ Property common.setting6.ops was added with value: added
+ Property group1.baz was updated. From updated to 'bas'
+ Property group1.nest was updated. From updated to '[complex value]'
+ Property group2 was removed
+ Property group3 was added with value: added
