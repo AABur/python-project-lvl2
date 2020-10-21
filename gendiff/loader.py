@@ -3,23 +3,13 @@
 
 import json
 import os
-from os import error
+from json.decoder import JSONDecodeError
 
 import yaml
+from yaml.scanner import ScannerError
 
 
 def collect_data(file_path):
-    """Collect data from file.
-
-    Args:
-        file_path(str): path to JSON or YAML file
-
-    Raises:
-        error: [description]
-
-    Returns:
-        (dict): decoded data
-    """
     loaders = {
         '.json': json.load,
         '.yaml': yaml.safe_load,
@@ -29,6 +19,13 @@ def collect_data(file_path):
     correct_exts = loaders.keys()
     _, ext = os.path.splitext(file_path)
     if ext not in correct_exts:
-        raise error('Wrong file')
-    with open(file_path) as data_file:
-        return call_loader(ext)(data_file)
+        exit(''.join(('Incorrect file ', file_path)))
+    try:
+        with open(file_path) as data_file:
+            return call_loader(ext)(data_file)
+    except FileNotFoundError:
+        exit(''.join(('File not found ', file_path)))
+    except ScannerError:
+        exit(''.join(('Wrong YAML file ', file_path)))
+    except JSONDecodeError:
+        exit(''.join(('Wrong JSON file ', file_path)))
