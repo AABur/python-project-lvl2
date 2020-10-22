@@ -16,21 +16,22 @@ REMOVED_STR = 'Property {0} was removed'
 UPDATED_STR = 'Property {0} was updated. From {1} to {2}'
 
 
-def print_plain(source):
+def print_plain(source):  # noqa:WPS210
     patterns = {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
     }
     plain = ''
-    for key, key_value in renderer(source).items():
+    rendered_val = renderer(source)
+    for key, key_value in rendered_val.items():
         status = key_value[0]
         if status not in patterns.keys():
             continue
         plain = ' '.join(
             [
                 plain,
-                patterns[status].format(key, *key_value),
+                patterns[status].format(key, *key_value[1:]),
                 '\n',
             ],
         )
