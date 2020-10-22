@@ -2,7 +2,7 @@
 """Test plain format generator."""
 
 
-from gendiff.format_plain import print_plain
+from gendiff.formaters.format_plain import print_plain
 
 test_data = {
     'follow':

@@ -14,8 +14,8 @@ import argparse
 import json
 
 from gendiff.comparator import generate_diff
-from gendiff.format_plain import print_plain
-from gendiff.format_structured import render
+from gendiff.formaters.format_plain import print_plain
+from gendiff.formaters.format_structured import render
 
 
 def main():
