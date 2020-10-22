@@ -33,10 +33,14 @@ test_data = {
         },
 }
 
-test_result = """ Property follow was removed
- Property proxy was removed
- Property timeout was updated. From 50 to 20
- Property verbose was added with value: True \n"""
+test_result = ''.join(
+    (
+        ' Property follow was removed \n',
+        ' Property proxy was removed \n',
+        ' Property timeout was updated. From 50 to 20 \n',
+        ' Property verbose was added with value: True \n',
+    ),
+)
 
 
 def test_print_plain():
