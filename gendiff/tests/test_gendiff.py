@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-"""Generate diff tests."""
+"""Test file loader."""
 
 
 from gendiff.loader import collect_data
