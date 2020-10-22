@@ -9,6 +9,26 @@ import yaml
 from yaml.scanner import ScannerError
 
 
+class WrongFileError(Exception):
+    """Special exception for wrong files."""
+
+    def __init__(self, file_path):
+        """Exception WrongFileError init.
+
+        Args:
+            file_path (str): file path
+        """
+        self.file_path = file_path
+
+    def __str__(self):
+        """Meaasage for WrongFileError.
+
+        Returns:
+            (str): error message
+        """
+        return 'Wrong file {0}'.format(self.file_path)
+
+
 def collect_data(file_path):
     loaders = {
         '.json': json.load,
@@ -19,13 +39,9 @@ def collect_data(file_path):
     correct_exts = loaders.keys()
     _, ext = os.path.splitext(file_path)
     if ext not in correct_exts:
-        exit(''.join(('Incorrect file ', file_path)))
+        raise WrongFileError(file_path)
     try:
         with open(file_path) as data_file:
             return call_loader(ext)(data_file)
-    except FileNotFoundError:
-        exit(''.join(('File not found ', file_path)))
-    except ScannerError:
-        exit(''.join(('Wrong YAML file ', file_path)))
-    except JSONDecodeError:
-        exit(''.join(('Wrong JSON file ', file_path)))
+    except (FileNotFoundError, ScannerError, JSONDecodeError):
+        raise WrongFileError(file_path)
