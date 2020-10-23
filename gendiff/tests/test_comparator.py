@@ -6,22 +6,41 @@ import pytest
 from gendiff.comparator import generate_diff
 
 complex1_json = 'gendiff/tests/fixtures/complex1.json'
-complex2_json = 'gendiff/tests/fixtures/complex1.json'
+complex2_json = 'gendiff/tests/fixtures/complex2.json'
 
 result_data = {
     'group1': {
-        'status': 'unchanged',
-        'value': {
-            'baz': 'bas',
-            'foo': 'bar',
-            'nest': {'key': 'value'},
+        'baz': {
+            'status': 'updated',
+            'updated_value': 'bars',
+            'value': 'bas',
+        },
+        'foo': {
+            'status': 'unchanged',
+            'value': 'bar',
+        },
+        'nest': {
+            'status': 'updated',
+            'updated_value': 'str',
+            'value': {
+                'key': 'value',
+            },
         },
     },
     'group2': {
-        'status': 'unchanged',
+        'status': 'removed',
         'value': {
             'abc': 12345,
             'deep': {'id': 45},
+        },
+    },
+    'group3': {
+        'status': 'added',
+        'value': {
+            'deep': {
+                'id': {'number': 45},
+            },
+            'fee': 100500,
         },
     },
 }
