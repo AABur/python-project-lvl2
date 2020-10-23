@@ -41,14 +41,11 @@ def print_plain(source):  # noqa:WPS210
 def renderer(source):
     flatted = {}
     for k1, v1 in source.items():
-        if isinstance(v1, dict):
-            if v1.get(STATUS):
-                flatted[k1] = get_value(v1.get(STATUS), v1)
-            else:
-                for k2, v2 in renderer(v1).items():
-                    flatted['{0}.{1}'.format(k1, k2)] = v2
+        if v1.get(STATUS):
+            flatted[k1] = get_value(v1.get(STATUS), v1)
         else:
-            flatted[k1] = v1
+            for k2, v2 in renderer(v1).items():
+                flatted['{0}.{1}'.format(k1, k2)] = v2
     return flatted
 
 
