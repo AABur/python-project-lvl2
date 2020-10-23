@@ -7,8 +7,11 @@ dist/
 # Git Time Metric
 .gtm/
 # VS Code
-.vscode/
+.vscode/*
+# pytest
 .coverage
 .mutmut-cache
 htmlcov/
 html/
+# pre-commit
+.pre-commit-config.yaml
