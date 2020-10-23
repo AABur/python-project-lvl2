@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AABur_gendiff"
-version = "1.0.0"
+version = "0.3.0"
 description = "Generate diff"
 authors = ["AABur <aabur@mail.ru>"]
 repository = "https://github.com/AABur/python-project-lvl2"
