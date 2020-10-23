@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AABur_gendiff"
-version = "0.3.0"
+version = "0.3.1"
 description = "Generate diff"
 license = "MIT"
 authors = ["AABur <aabur@mail.ru>"]
