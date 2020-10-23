@@ -69,6 +69,10 @@ optional arguments:
 
 [![asciicast](https://asciinema.org/a/0tXY4DIYfArT1hu56Wo6Gwq0u.svg)](https://asciinema.org/a/0tXY4DIYfArT1hu56Wo6Gwq0u)
 
+## Contributing
+
+This is a learning project and the contribution is not accepted.
+
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT License](https://github.com/AABur/python-project-lvl2/blob/master/LICENSE)
