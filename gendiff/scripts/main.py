@@ -44,6 +44,7 @@ def main():
     )
     args = parser.parse_args()
     diff = (generate_diff(args.first_file, args.second_file))
+    print(diff)
     if args.format == 'plain':
         print(print_plain(diff))
     elif args.format == 'json':
