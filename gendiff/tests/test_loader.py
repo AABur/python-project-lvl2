@@ -42,4 +42,4 @@ def test_correct_file(file_path, file_data):
 def test_wrong_file(file_path):
     with pytest.raises(WrongFileError) as file_error:
         assert collect_data(file_path)
-    assert str(file_error.value) == 'Wrong file {0}'.format(file_path)
+    assert str(file_error.value) == 'Wrong file {0}'.format(file_path)  # noqa:WPS441, E501
