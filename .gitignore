@@ -16,3 +16,4 @@ html/
 # pre-commit
 .pre-commit-config.yaml
 .vscode/settings.json
+.vscode/settings.json
