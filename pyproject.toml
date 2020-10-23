@@ -2,7 +2,9 @@
 name = "AABur_gendiff"
 version = "0.3.0"
 description = "Generate diff"
+license = "MIT"
 authors = ["AABur <aabur@mail.ru>"]
+readme = "README.md"
 repository = "https://github.com/AABur/python-project-lvl2"
 packages = [
     { include = "gendiff" },
