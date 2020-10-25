@@ -13,3 +13,4 @@ dist/
 .mutmut-cache
 htmlcov/
 html/
+coverage_html/
