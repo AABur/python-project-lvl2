@@ -37,4 +37,4 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REP_ID }}
         with:
-          coverageCommand: poetry run coverage xml
+          coverageCommand: make cc-coverage
