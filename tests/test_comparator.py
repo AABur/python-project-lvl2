@@ -5,8 +5,8 @@ import pytest
 
 from gendiff.comparator import generate_diff
 
-complex1_json = 'gendiff/tests/fixtures/complex1.json'
-complex2_json = 'gendiff/tests/fixtures/complex2.json'
+complex1_json = 'tests/fixtures/complex1.json'
+complex2_json = 'tests/fixtures/complex2.json'
 
 result_data = {
     'group1': {
