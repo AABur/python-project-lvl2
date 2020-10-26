@@ -72,7 +72,7 @@ complex_data = {
 complex_result = ''.join(
     (
         " Property group1.baz was updated. From 'bas' to 'bars' \n",
-        " Property group1.nest was updated. From '[complex value]' to 'str' \n",
+        " Property group1.nest was updated. From '[complex value]' to 'str' \n",  # noqa:E501
         ' Property group2 was removed \n',
         " Property group3 was added with value: '[complex value]' \n",
     ),

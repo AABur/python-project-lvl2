@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """Generating structured text otput."""
 
-from gendiff.common_values import (
+from gendiff.constants import (
     ADDED,
     REMOVED,
     STATUS,

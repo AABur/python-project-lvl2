@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """Calculate differnce."""
 
-from gendiff.common_values import (
+from gendiff.constants import (
     ADDED,
     REMOVED,
     STATUS,
