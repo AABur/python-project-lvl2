@@ -13,6 +13,7 @@ from gendiff.constants import (
 from gendiff.loader import collect_data
 
 
+# TODO Функция generate_diff должна возвращать уже отформатированную строку
 def generate_diff(old_file_path, new_file_path):
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)

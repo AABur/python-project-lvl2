@@ -25,6 +25,7 @@ def get_status_sign(status):
     }.get(status, EMPTY)
 
 
+# FIXME noqa:WPS231
 def render(source, indent=0):  # noqa:WPS231
     if isinstance(source, dict):
         output_items = []

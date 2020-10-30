@@ -18,6 +18,7 @@ from gendiff.formaters.format_plain import print_plain
 from gendiff.formaters.format_structured import render
 
 
+# TODO сделать функцию make_parser
 def main():
     """Generate diff CLI.
 
