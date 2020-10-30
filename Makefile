@@ -11,7 +11,9 @@ selfcheck: ## Checks the validity of the pyproject.toml file
 	poetry check
 
 check: ## selfcheck + test + lint
-	selfcheck test lint
+	make selfcheck
+	make test
+	make lint
 
 build: ## Check and builds a package
 	check
