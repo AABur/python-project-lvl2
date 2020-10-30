@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 """Calculate differnce."""
 
+import json
+
 from gendiff.constants import (
     ADDED,
     REMOVED,
@@ -10,14 +12,21 @@ from gendiff.constants import (
     UPDATED_VALUE,
     VALUE,
 )
+from gendiff.formaters.format_plain import print_plain
+from gendiff.formaters.format_structured import render
 from gendiff.loader import collect_data
 
 
 # TODO Функция generate_diff должна возвращать уже отформатированную строку
-def generate_diff(old_file_path, new_file_path):
+def generate_diff(old_file_path, new_file_path, output_format):
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)
-    return compare(old, new)
+    diff = compare(old, new)
+    if output_format == 'plain':
+        return print_plain(diff)
+    elif output_format == 'json':
+        return json.dumps(diff)
+    return render(diff)
 
 
 def compare(old, new):

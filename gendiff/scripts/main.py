@@ -11,11 +11,8 @@ from gendiff import generate_diff
 diff = generate_diff(file_path1, file_path2)
 """
 import argparse
-import json
 
 from gendiff.comparator import generate_diff
-from gendiff.formaters.format_plain import print_plain
-from gendiff.formaters.format_structured import render
 
 
 # TODO сделать функцию make_parser
@@ -44,13 +41,7 @@ def main():
         help='set output format (default: structured)',
     )
     args = parser.parse_args()
-    diff = (generate_diff(args.first_file, args.second_file))
-    if args.format == 'plain':
-        print(print_plain(diff))
-    elif args.format == 'json':
-        print(json.dumps(diff))
-    else:
-        print(render(diff))
+    print(generate_diff(args.first_file, args.second_file, args.format))
 
 
 if __name__ == '__main__':
