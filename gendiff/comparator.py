@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-"""Calculate differnce."""
+"""Calculate difference."""
 
 import json
 
@@ -17,7 +17,6 @@ from gendiff.formaters.format_structured import render
 from gendiff.loader import collect_data
 
 
-# TODO Функция generate_diff должна возвращать уже отформатированную строку
 def generate_diff(old_file_path, new_file_path, output_format):
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)

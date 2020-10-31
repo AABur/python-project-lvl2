@@ -21,7 +21,7 @@ class WrongFileError(Exception):
         self.file_path = file_path
 
     def __str__(self):
-        """Meaasage for WrongFileError.
+        """Message for WrongFileError.
 
         Returns:
             (str): error message

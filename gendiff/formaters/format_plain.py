@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-"""Generating plain text otput."""
+"""Generating plain text output."""
 
 from gendiff.constants import (
     ADDED,

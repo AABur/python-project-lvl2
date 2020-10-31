@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-"""Generating structured text otput."""
+"""Generating structured text output."""
 
 from gendiff.constants import (
     ADDED,
