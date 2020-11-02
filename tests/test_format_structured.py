@@ -1,12 +1,19 @@
 # -*- coding:utf-8 -*-
 """Test plain format generator."""
 
+import pytest
+
 from gendiff.formaters.format_structured import render
 
 
-def test_print_structured_s(simple_data, simple_result_s):
-    assert render(simple_data) == simple_result_s
-
-
-def test_print_structured_c(complex_data, complex_result_s):
-    assert render(complex_data) == complex_result_s
+@pytest.mark.parametrize(
+    'test_data, test_result',
+    [
+        ('simple_data', 'simple_result_s'),
+        ('complex_data', 'complex_result_s'),
+    ],
+)
+def test_print_structured(test_data, test_result, request):
+    t_data = request.getfixturevalue(test_data)
+    t_result = request.getfixturevalue(test_result)
+    assert render(t_data) == t_result
