@@ -16,33 +16,11 @@ gendiff = "gendiff.scripts.main:main"
 [tool.poetry.dependencies]
 python = "^3.8"
 PyYAML = "^5.3.1"
-colorama = "^0.4.4"
 
 [tool.poetry.dev-dependencies]
-commitizen = "^2.4.0"
 wemake-python-styleguide = "^0.14.1"
 pyformat = "^0.7"
 pytest-cov = "^2.10.1"
 pytest = "^6.1.1"
 coverage = "^5.3"
 rope = "^0.18.0"
-pre-commit = "^2.8.2"
-
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "1.0.0"
-version_files = [
-    "pyproject.toml:version"
-]
-style = [
-    ["qmark", "fg:#ff9d00 bold"],
-    ["question", "bold"],
-    ["answer", "fg:#ff9d00 bold"],
-    ["pointer", "fg:#ff9d00 bold"],
-    ["highlighted", "fg:#ff9d00 bold"],
-    ["selected", "fg:#cc5454"],
-    ["separator", "fg:#cc5454"],
-    ["instruction", ""],
-    ["text", ""],
-    ["disabled", "fg:#858585 italic"]
-]
