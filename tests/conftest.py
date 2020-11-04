@@ -35,12 +35,12 @@ def result_data():
 
 @pytest.fixture()
 def complex1_json():
-    return 'tests/fixtures/complex1.json'
+    return 'tests/fixtures/complex01.json'
 
 
 @pytest.fixture()
 def complex2_json():
-    return 'tests/fixtures/complex2.json'
+    return 'tests/fixtures/complex02.json'
 
 
 @pytest.fixture()
