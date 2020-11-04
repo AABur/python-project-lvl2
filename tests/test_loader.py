@@ -5,12 +5,12 @@ import pytest
 
 from gendiff.loader import WrongFileError, collect_data
 
-correct_json = 'tests/fixtures/file1.json'
-wrong_json = 'tests/fixtures/txt.json'
-correct_yaml = 'tests/fixtures/file2.yaml'
-wrong_yaml = 'tests/fixtures/txt.yaml'
-wrong_ext = 'tests/fixtures/json1.txt'
-file_missing = 'tests/fixtures/ttt.ttt'
+correct_json = 'tests/fixtures/old/file1.json'
+wrong_json = 'tests/fixtures/old/txt.json'
+correct_yaml = 'tests/fixtures/old/file2.yaml'
+wrong_yaml = 'tests/fixtures/old/txt.yaml'
+wrong_ext = 'tests/fixtures/old/json1.txt'
+file_missing = 'tests/fixtures/old/ttt.ttt'
 
 json_data = {
     'host': 'hexlet.io',
