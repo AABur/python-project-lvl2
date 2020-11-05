@@ -17,7 +17,7 @@ from gendiff.comparator import generate_diff
         ('json', 'complex_before', 'complex_after', 'result_complex_json'),
     ],
 )
-def test_plain(style, file_before, fiel_after, file_result, request):
+def test_generate_diff(style, file_before, fiel_after, file_result, request):
     before = request.getfixturevalue(file_before)
     after = request.getfixturevalue(fiel_after)
     with open(request.getfixturevalue(file_result), 'r') as file:
