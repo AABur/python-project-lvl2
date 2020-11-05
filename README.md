@@ -11,8 +11,7 @@ Gendiff (GENerator of DIFFerences) - a program defining the difference between t
 
 - Supported input formats: YAML, JSON
 - Report generation as plain text, structured text and JSON
-- CLI util - `gendiff first_file second_file`
-- library function - `from gendiff import generate_diff`
+- Usage as CLI util or library function
 
 ## Installation
 
