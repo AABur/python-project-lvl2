@@ -12,23 +12,23 @@ from gendiff.constants import (
     UPDATED_VALUE,
     VALUE,
 )
-from gendiff.formaters.format_plain import print_plain
-from gendiff.formaters.format_structured import render
+from gendiff.formaters.format_plain import generate_plain_diff
+from gendiff.formaters.format_structured import generate_structured_diff
 from gendiff.loader import collect_data
 
 
 def generate_diff(old_file_path, new_file_path, output_format):
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)
-    diff = compare(old, new)
+    diff = compile_diff(old, new)
     if output_format == 'plain':
-        return print_plain(diff)
+        return generate_plain_diff(diff)
     elif output_format == 'json':
         return json.dumps(diff)
-    return render(diff)
+    return generate_structured_diff(diff)
 
 
-def compare(old, new):
+def compile_diff(old, new):
     compared = {}
     keys = {
         'keys_union': sorted(old.keys() | new.keys()),
@@ -58,7 +58,7 @@ def compare_same_keys(old_value, new_value):
             VALUE: old_value,
         }
     elif isinstance(old_value, dict) and isinstance(new_value, dict):
-        return compare(old_value, new_value)
+        return compile_diff(old_value, new_value)
     return {
         STATUS: UPDATED,
         VALUE: old_value,

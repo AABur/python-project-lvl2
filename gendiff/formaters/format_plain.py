@@ -16,14 +16,14 @@ REMOVED_STR = 'Property {0} was removed'
 UPDATED_STR = 'Property {0} was updated. From {1} to {2}'
 
 
-def print_plain(source):
+def generate_plain_diff(diff):
     patterns = {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
     }
     plain = ''
-    rendered_val = renderer(source)
+    rendered_val = parse_diff(diff)
     for key, key_value in rendered_val.items():
         if key_value[0] in patterns.keys():
             plain = ' '.join(
@@ -36,13 +36,13 @@ def print_plain(source):
     return plain
 
 
-def renderer(source):
+def parse_diff(diff):
     flatted = {}
-    for k1, v1 in source.items():
+    for k1, v1 in diff.items():
         if v1.get(STATUS):
             flatted[k1] = get_value(v1.get(STATUS), v1)
         else:
-            for k2, v2 in renderer(v1).items():
+            for k2, v2 in parse_diff(v1).items():
                 flatted['{0}.{1}'.format(k1, k2)] = v2
     return flatted
 
