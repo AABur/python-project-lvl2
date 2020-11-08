@@ -22,31 +22,26 @@ def generate_plain_diff(diff):
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
     }
-    plain = ''
-    rendered_val = parse_diff(diff)
-    for key, key_value in rendered_val.items():
-        if key_value[0] in patterns.keys():
-            plain = ' '.join(
-                [
-                    plain,
-                    patterns[key_value[0]].format(key, *key_value[1:]),
-                    '\n',
-                ],
-            )
-    return plain
+    plain_diff = []
+    # FIXME noqa
+    for key, (status, *value) in flat_diff(diff).items():  # noqa: WPS414, WPS405, E501
+        if patterns.get(status):
+            plain_diff.append(patterns.get(status).format(key, *value))
+    return '\n'.join(plain_diff)
 
 
-def parse_diff(diff):
+def flat_diff(diff):
     flatted = {}
     for k1, v1 in diff.items():
         if v1.get(STATUS):
             flatted[k1] = get_value(v1.get(STATUS), v1)
         else:
-            for k2, v2 in parse_diff(v1).items():
+            for k2, v2 in flat_diff(v1).items():
                 flatted['{0}.{1}'.format(k1, k2)] = v2
     return flatted
 
 
+# FIXME separate: getting value and masking COMPLEX
 def get_value(status, v1):
     if status != UPDATED:
         added_value = COMPLEX_VALUE if isinstance(
