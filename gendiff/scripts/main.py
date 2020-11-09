@@ -11,7 +11,7 @@ from gendiff import generate_diff
 diff = generate_diff(file_path1, file_path2)
 """
 from gendiff.arg_parser import arg_parser
-from gendiff.comparator import generate_diff
+from gendiff.gendiff import generate_diff
 
 
 # TODO написать тесты

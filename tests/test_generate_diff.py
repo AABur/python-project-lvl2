@@ -3,7 +3,7 @@
 
 import pytest
 
-from gendiff.comparator import generate_diff
+from gendiff.gendiff import generate_diff
 
 
 @pytest.mark.parametrize(
