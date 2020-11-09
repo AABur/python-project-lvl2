@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "AABur_gendiff"
+name = "hexlet_code"
 version = "0.3.1"
 description = "Generate diff"
 license = "MIT"
