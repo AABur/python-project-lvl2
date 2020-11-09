@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 """Generating plain text output."""
 
+
 from gendiff.constants import (
     ADDED,
     COMPLEX_VALUE,
@@ -16,42 +17,47 @@ REMOVED_STR = 'Property {0} was removed'
 UPDATED_STR = 'Property {0} was updated. From {1} to {2}'
 
 
+# FIXME noqa
 def generate_plain_diff(diff):
-    patterns = {
+    get_pattern = {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
-    }
+    }.get
     plain_diff = []
-    # FIXME noqa
-    for key, (status, *value) in flat_diff(diff).items():  # noqa: WPS414, WPS405, E501
-        if patterns.get(status):
-            plain_diff.append(patterns.get(status).format(key, *value))
+    for key, (status, *value) in flatt(diff).items():  # noqa: WPS414, WPS405
+        if get_pattern(status):
+            plain_diff.append(get_pattern(status).format(key, *value))
     return '\n'.join(plain_diff)
 
 
-def flat_diff(diff):
+# FIXME noqa
+def flatt(diff):  # noqa: WPS210
     flatted = {}
-    for k1, v1 in diff.items():
-        if v1.get(STATUS):
-            flatted[k1] = get_value(v1.get(STATUS), v1)
+    for diff_key, diff_value in diff.items():
+        if diff_value.get(STATUS):
+            flatted[diff_key] = get_value(diff_value.get(STATUS), diff_value)
         else:
-            for k2, v2 in flat_diff(v1).items():
-                flatted['{0}.{1}'.format(k1, k2)] = v2
+            for flatt_key, flatt_value in flatt(diff_value).items():
+                complex_key = '{0}.{1}'.format(diff_key, flatt_key)
+                flatted[complex_key] = flatt_value
     return flatted
 
 
-# FIXME separate: getting value and masking COMPLEX
 def get_value(status, v1):
     if status != UPDATED:
-        added_value = COMPLEX_VALUE if isinstance(
-            v1.get(VALUE), dict,
-        ) else v1.get(VALUE)
-        return (status, repr(added_value))
-    updated_from = COMPLEX_VALUE if isinstance(
-        v1.get(VALUE), dict,
-    ) else v1.get(VALUE)
-    updated_to = COMPLEX_VALUE if isinstance(
-        v1.get(UPDATED_VALUE), dict,
-    ) else v1.get(UPDATED_VALUE)
-    return (UPDATED, repr(updated_from), repr(updated_to))
+        added_value = format_value(v1.get(VALUE))
+        return (status, added_value)
+    updated_from = format_value(v1.get(VALUE))
+    updated_to = format_value(v1.get(UPDATED_VALUE))
+    return (UPDATED, updated_from, updated_to)
+
+
+def format_value(value):
+    if isinstance(value, dict):
+        return COMPLEX_VALUE
+    if isinstance(value, bool) or value is None:
+        return str(value).lower()
+    if isinstance(value, str):
+        return "'{0}'".format(value)
+    return value
