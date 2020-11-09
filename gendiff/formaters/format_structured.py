@@ -13,7 +13,7 @@ from gendiff.constants import (
 
 LF_CH = '\n'
 HT_CH = ' '
-INDENT_STEP = 4
+INDENT_STEP = 2
 EMPTY = ''
 
 
@@ -75,12 +75,12 @@ def get_status(source_value):
 
 def create_item(key, status, new_value, indent):
     get_status_sign = {
-        ADDED: '+ ',
-        REMOVED: '- ',
-        UNCHANGED: '  ',
+        ADDED: '  + ',
+        REMOVED: '  - ',
+        UNCHANGED: '    ',
     }.get(status)
     if not get_status_sign:
-        get_status_sign = EMPTY
+        get_status_sign = '  '
     return '{0}{1}{2}: {3}'.format(
         LF_CH + HT_CH * indent,
         get_status_sign,
