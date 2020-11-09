@@ -6,6 +6,7 @@ Gendiff (GENerator of DIFFerences) - a program defining the difference between t
 [![Maintainability](https://api.codeclimate.com/v1/badges/819fe1aa42985a7b2dc5/maintainability)](https://codeclimate.com/github/AABur/python-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/819fe1aa42985a7b2dc5/test_coverage)](https://codeclimate.com/github/AABur/python-project-lvl2/test_coverage)
 ![CitHub_CI](https://github.com/AABur/python-project-lvl2/workflows/CitHub_CI/badge.svg)
+![Actions Status](https://github.com/AABur/python-project-lvl2/workflows/hexlet-check/badge.svg)
 
 ## Features
 
