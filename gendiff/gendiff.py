@@ -17,7 +17,7 @@ from gendiff.formaters.format_structured import generate_structured_diff
 from gendiff.loader import collect_data
 
 
-def generate_diff(old_file_path, new_file_path, output_format):
+def generate_diff(old_file_path, new_file_path, output_format='structured'):
     old = collect_data(old_file_path)
     new = collect_data(new_file_path)
     diff = compile_diff(old, new)
