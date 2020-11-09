@@ -4,13 +4,15 @@
 
 from gendiff.constants import (
     ADDED,
-    COMPLEX_VALUE,
     REMOVED,
     STATUS,
     UPDATED,
     UPDATED_VALUE,
     VALUE,
 )
+
+COMPLEX_VALUE = '[complex value]'
+
 
 ADDED_STR = 'Property {0} was added with value: {1}'
 REMOVED_STR = 'Property {0} was removed'

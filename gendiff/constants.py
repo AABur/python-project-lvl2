@@ -2,10 +2,11 @@
 """Common values for all modules."""
 
 STATUS = 'status'
-VALUE = 'value'
-UPDATED = 'updated'
+
+ADDED = 'added'
 REMOVED = 'removed'
 UNCHANGED = 'unchanged'
-ADDED = 'added'
+UPDATED = 'updated'
+
+VALUE = 'value'
 UPDATED_VALUE = 'updated_value'
-COMPLEX_VALUE = '[complex value]'
