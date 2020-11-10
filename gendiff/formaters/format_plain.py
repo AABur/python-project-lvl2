@@ -14,9 +14,9 @@ from gendiff.constants import (
 COMPLEX_VALUE = '[complex value]'
 
 
-ADDED_STR = 'Property {0} was added with value: {1}'
-REMOVED_STR = 'Property {0} was removed'
-UPDATED_STR = 'Property {0} was updated. From {1} to {2}'
+ADDED_STR = "Property '{0}' was added with value: {1}"
+REMOVED_STR = "Property '{0}' was removed"
+UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
 # FIXME noqa
