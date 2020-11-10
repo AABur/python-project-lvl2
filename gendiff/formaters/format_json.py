@@ -4,5 +4,5 @@
 import json
 
 
-def generate_json_diff(diff):
+def prepare_json(diff):
     return json.dumps(diff)

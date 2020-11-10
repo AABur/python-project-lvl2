@@ -10,11 +10,7 @@ from gendiff.constants import (
     UPDATED_VALUE,
     VALUE,
 )
-from gendiff.formaters import (
-    generate_json_diff,
-    generate_plain_diff,
-    generate_stylish_diff,
-)
+from gendiff.formaters import prepare_json, prepare_plain, prepare_stylish
 from gendiff.loader import collect_data
 
 
@@ -23,10 +19,10 @@ def generate_diff(old_file_path, new_file_path, output_format='stylish'):
     new = collect_data(new_file_path)
     diff = compile_diff(old, new)
     if output_format == 'plain':
-        return generate_plain_diff(diff)
+        return prepare_plain(diff)
     elif output_format == 'json':
-        return generate_json_diff(diff)
-    return generate_stylish_diff(diff)
+        return prepare_json(diff)
+    return prepare_stylish(diff)
 
 
 def compile_diff(old, new):

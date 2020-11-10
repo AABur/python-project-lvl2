@@ -20,7 +20,7 @@ UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
 # FIXME noqa
-def generate_plain_diff(diff):
+def prepare_plain(diff):
     get_pattern = {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
