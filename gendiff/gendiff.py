@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
 """Calculate difference."""
 
-import json
-
 from gendiff.constants import (
     ADDED,
     REMOVED,
@@ -12,6 +10,7 @@ from gendiff.constants import (
     UPDATED_VALUE,
     VALUE,
 )
+from gendiff.formaters.format_json import generate_json_diff
 from gendiff.formaters.format_plain import generate_plain_diff
 from gendiff.formaters.format_structured import generate_structured_diff
 from gendiff.loader import collect_data
@@ -24,7 +23,7 @@ def generate_diff(old_file_path, new_file_path, output_format='stylish'):
     if output_format == 'plain':
         return generate_plain_diff(diff)
     elif output_format == 'json':
-        return json.dumps(diff)
+        return generate_json_diff(diff)
     return generate_structured_diff(diff)
 
 
