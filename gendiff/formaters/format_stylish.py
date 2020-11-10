@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-"""Generating structured text output."""
+"""Generating stylish text output."""
 
 from gendiff.constants import (
     ADDED,
@@ -16,7 +16,7 @@ INDENT_STEP = 4
 EMPTY = ''
 
 
-def generate_structured_diff(source, indent=0):
+def generate_stylish_diff(source, indent=0):
     if isinstance(source, dict):
         output_items = []
         for key in source:
@@ -83,5 +83,5 @@ def create_item(key, status, new_value, indent):
     return '{0}{1}: {2}'.format(
         prefix,
         key,
-        generate_structured_diff(new_value, indent),
+        generate_stylish_diff(new_value, indent),
     )
