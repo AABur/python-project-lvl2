@@ -5,7 +5,6 @@ from gendiff.constants import (
     ADDED,
     REMOVED,
     STATUS,
-    UNCHANGED,
     UPDATED,
     UPDATED_VALUE,
     VALUE,
@@ -13,7 +12,7 @@ from gendiff.constants import (
 
 LF_CH = '\n'
 HT_CH = ' '
-INDENT_STEP = 2
+INDENT_STEP = 4
 EMPTY = ''
 
 
@@ -75,15 +74,14 @@ def get_status(source_value):
 
 def create_item(key, status, new_value, indent):
     get_status_sign = {
-        ADDED: '  + ',
-        REMOVED: '  - ',
-        UNCHANGED: '    ',
+        ADDED: '+ ',
+        REMOVED: '- ',
     }.get(status)
-    if not get_status_sign:
-        get_status_sign = '  '
-    return '{0}{1}{2}: {3}'.format(
-        LF_CH + HT_CH * indent,
-        get_status_sign,
+    prefix = LF_CH + HT_CH * indent
+    if get_status_sign:
+        prefix = prefix[:-2] + get_status_sign
+    return '{0}{1}: {2}'.format(
+        prefix,
         key,
         generate_structured_diff(new_value, indent),
     )
