@@ -11,12 +11,12 @@ selfcheck: ## Checks the validity of the pyproject.toml file
 	poetry check
 
 check: ## selfcheck + test + lint
-	make selfcheck
-	make test
-	make lint
+	@make selfcheck
+	@make test
+	@make lint
 
 build: ## Check and builds a package
-	check
+	@make check
 	@poetry build
 
 cc-coverage: ## Prepare coverage report for Codeclimate
