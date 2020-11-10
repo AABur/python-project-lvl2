@@ -20,9 +20,9 @@ def arg_parser():
         '-f',
         '--format',
         type=str,
-        choices=('structured', 'plain', 'json'),
-        default='structured',
-        help='set output format (default: structured)',
+        choices=('stylish', 'plain', 'json'),
+        default='stylish',
+        help='set output format (default: stylish)',
     )
     args = parser.parse_args()
     return {
