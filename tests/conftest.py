@@ -35,8 +35,8 @@ def result_complex_plain():
 
 
 @pytest.fixture()
-def result_complex_structured():
-    return 'tests/fixtures/complex/result_structured.txt'
+def result_complex_stylish():
+    return 'tests/fixtures/complex/result_stylish.txt'
 
 
 @pytest.fixture()
@@ -50,5 +50,5 @@ def result_simple_plain():
 
 
 @pytest.fixture()
-def result_simple_structured():
-    return 'tests/fixtures/simple/result_structured.txt'
+def result_simple_stylish():
+    return 'tests/fixtures/simple/result_stylish.txt'

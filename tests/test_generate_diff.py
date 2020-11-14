@@ -11,8 +11,8 @@ from gendiff import generate_diff
     [
         ('plain', 'simple_before_path', 'simple_after_path', 'result_simple_plain'),
         ('plain', 'complex_before_path', 'complex_after_path', 'result_complex_plain'),
-        ('structured', 'simple_before_path', 'simple_after_path', 'result_simple_structured'),  # noqa:E501
-        ('structured', 'complex_before_path', 'complex_after_path', 'result_complex_structured'),  # noqa:E501
+        ('stylish', 'simple_before_path', 'simple_after_path', 'result_simple_stylish'),  # noqa:E501
+        ('stylish', 'complex_before_path', 'complex_after_path', 'result_complex_stylish'),  # noqa:E501
         ('json', 'simple_before_path', 'simple_after_path', 'result_simple_json'),
         ('json', 'complex_before_path', 'complex_after_path', 'result_complex_json'),
     ],
