@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """Generating stylish text output."""
 
-from gendiff.constants import (
+from gendiff.comparator import (
     ADDED,
     REMOVED,
     STATUS,

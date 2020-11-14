@@ -2,7 +2,7 @@
 """Generating plain text output."""
 
 
-from gendiff.constants import (
+from gendiff.comparator import (
     ADDED,
     REMOVED,
     STATUS,
