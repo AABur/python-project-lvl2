@@ -9,39 +9,29 @@ import yaml
 from yaml.scanner import ScannerError
 
 
-class WrongFileError(Exception):
-    """Special exception for wrong files."""
-
-    def __init__(self, file_path):
-        """Exception WrongFileError init.
-
-        Args:
-            file_path (str): file path
-        """
-        self.file_path = file_path
+class FileError(Exception):
+    def __init__(self, *args):
+        self.message = args[0] if args else None
 
     def __str__(self):
-        """Message for WrongFileError.
-
-        Returns:
-            (str): error message
-        """
-        return 'Wrong file {0}'.format(self.file_path)
+        if self.message:
+            return '{0} '.format(self.message)
+        return 'MyCustomError has been raised'
 
 
 def collect_data(file_path):
-    loaders = {
+    _, ext = os.path.splitext(file_path)
+    loader = {
         '.json': json.load,
         '.yaml': yaml.safe_load,
         '.yml': yaml.safe_load,
-    }
-    call_loader = loaders.get
-    correct_exts = loaders.keys()
-    _, ext = os.path.splitext(file_path)
-    if ext not in correct_exts:
-        raise WrongFileError(file_path)
+    }.get(ext.lower())
+    if not loader:
+        raise FileError(''.join(('Not correct JSON/YAML file ', file_path)))
     try:
         with open(file_path) as data_file:
-            return call_loader(ext)(data_file)
-    except (FileNotFoundError, ScannerError, JSONDecodeError):
-        raise WrongFileError(file_path)
+            return loader(data_file)
+    except (ScannerError, JSONDecodeError):
+        raise FileError(''.join(('Not correct JSON/YAML file ', file_path)))
+    except OSError as error:
+        raise FileError(''.join((error.args[1], ' ', file_path)))
