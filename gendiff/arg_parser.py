@@ -26,9 +26,4 @@ def arg_parser():
         default='stylish',
         help='set output format (default: stylish)',
     )
-    args = parser.parse_args()
-    return {
-        'first_file': args.first_file,
-        'second_file': args.second_file,
-        'format': args.format,
-    }
+    return parser.parse_args()

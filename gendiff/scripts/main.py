@@ -25,9 +25,9 @@ def main():
     try:
         print(
             generate_diff(
-                args.get('first_file'),
-                args.get('second_file'),
-                args.get('format'),
+                args.first_file,
+                args.second_file,
+                args.format,
             ),
         )
     except FileError as error:
