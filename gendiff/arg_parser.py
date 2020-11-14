@@ -2,6 +2,8 @@
 """argparser."""
 import argparse
 
+from gendiff.formaters.formater import STYLES
+
 
 # TODO написать тесты
 def arg_parser():
@@ -20,7 +22,7 @@ def arg_parser():
         '-f',
         '--format',
         type=str,
-        choices=('stylish', 'plain', 'json'),
+        choices=(STYLES.keys()),
         default='stylish',
         help='set output format (default: stylish)',
     )
