@@ -12,10 +12,11 @@ VALUE = 'value'
 UPDATED_VALUE = 'updated_value'
 
 
-def compile_diff(old, new):  # noqa:WPS210
+def compile_diff(old, new):
     compared = {}
-    keys_union = old.keys() | new.keys()
+    keys_union = sorted(old.keys() | new.keys())
     keys_removed = old.keys() - new.keys()
+    keys_added = new.keys() - old.keys()
     keys_intersection = old.keys() & new.keys()
     for key in keys_union:
         old_value = old.get(key)
