@@ -14,7 +14,7 @@ UPDATED_VALUE = 'updated_value'
 
 def compile_diff(old, new):  # noqa:WPS210
     compared = {}
-    keys_union = old.keys() | new.keys()
+    keys_union = sorted(old.keys() | new.keys())
     keys_removed = old.keys() - new.keys()
     keys_intersection = old.keys() & new.keys()
     for key in keys_union:
