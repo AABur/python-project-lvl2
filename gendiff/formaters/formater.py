@@ -10,12 +10,13 @@ STYLES = {  # noqa:WPS407
     'plain': prepare_plain,
     'stylish': prepare_stylish,
 }
+DEFAULT_STYLE = 'stylish'
+
+# TODO добавить проверку на правильный стиль
 
 
-def call_formater(diff, style):
-    if style not in STYLES:
-        raise Exception('Style {0} not implemented'.format(style))
-    return STYLES[style](diff)
+def call_formater(diff, style=DEFAULT_STYLE):
+    return STYLES.get(style)(diff)
 
 
 # def sort_dict(item: dict):

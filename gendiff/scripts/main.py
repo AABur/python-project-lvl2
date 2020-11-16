@@ -21,7 +21,7 @@ def main():
 
     CLI usage: gendiff [-h] [-f FORMAT] first_file second_file
     """
-    args = arg_parser()
+    args = arg_parser().parse_args()
     try:
         print(
             generate_diff(
