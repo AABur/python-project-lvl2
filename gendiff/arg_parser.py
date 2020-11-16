@@ -2,7 +2,7 @@
 """argparser."""
 import argparse
 
-from gendiff.formaters.formater import STYLES
+from gendiff.formaters import STYLES
 
 
 # TODO написать тесты

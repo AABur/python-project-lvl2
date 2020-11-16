@@ -2,6 +2,6 @@
 
 """Formaters."""
 
-from gendiff.formaters.formater import call_formater
+from gendiff.formaters.formater import STYLES, call_formater
 
-__all__ = ('call_formater',)  # noqa: WPS410
+__all__ = ('STYLES', 'call_formater')  # noqa: WPS410
