@@ -14,21 +14,20 @@ UPDATED_VALUE = 'updated_value'
 
 def compile_diff(old, new):
     compared = {}
-    keys = {
-        'keys_union': sorted(old.keys() | new.keys()),
-        'keys_removed': old.keys() - new.keys(),
-        'keys_intersection': old.keys() & new.keys(),
-    }
-    for key in keys['keys_union']:
+    keys_union = sorted(old.keys() | new.keys())
+    keys_removed = old.keys() - new.keys()
+    keys_added = new.keys() - old.keys()
+    keys_intersection = old.keys() & new.keys()
+    for key in keys_union:
         old_value = old.get(key)
         new_value = new.get(key)
-        if key in keys['keys_intersection']:
+        if key in keys_intersection:
             compared[key] = compare_same_keys(old_value, new_value)
             continue
         compared[key] = {
             STATUS: REMOVED,
             VALUE: old_value,
-        } if key in keys['keys_removed'] else {
+        } if key in keys_removed else {
             STATUS: ADDED,
             VALUE: new_value,
         }
