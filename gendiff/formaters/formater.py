@@ -15,4 +15,8 @@ STYLES = {  # noqa:WPS407
 def call_formater(diff, style='stylish'):
     if style not in STYLES:
         raise Exception('Style {0} not implemented'.format(style))
-    return STYLES[style](diff)
+    return STYLES[style](sort_dict(diff))
+
+
+def sort_dict(item: dict):
+    return {k: sort_dict(v) if isinstance(v, dict) else v for k, v in sorted(item.items())}
