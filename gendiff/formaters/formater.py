@@ -17,7 +17,3 @@ DEFAULT_STYLE = 'stylish'
 
 def call_formater(diff, style=DEFAULT_STYLE):
     return STYLES.get(style)(diff)
-
-
-# def sort_dict(item: dict):
-#     return {k: sort_dict(v) if isinstance(v, dict) else v for k, v in sorted(item.items())}
