@@ -8,6 +8,8 @@ Gendiff (GENerator of DIFFerences) - a program defining the difference between t
 ![CitHub_CI](https://github.com/AABur/python-project-lvl2/workflows/CitHub_CI/badge.svg)
 ![Actions Status](https://github.com/AABur/python-project-lvl2/workflows/hexlet-check/badge.svg)
 
+[![Challenge | 100 Days of Code](https://img.shields.io/static/v1?label=Challenge&labelColor=384357&message=100%20Days%20of%20Code&color=00b4ee&style=for-the-badge&link=https://www.100daysofcode.com)](https://www.100daysofcode.com)
+
 ## Features
 
 - Supported input formats: YAML, JSON
