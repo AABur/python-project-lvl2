@@ -21,16 +21,20 @@ UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 # FIXME noqa
 def prepare_plain(diff):
-    get_pattern = {
+    plain_diff = []
+    for key, (status, *value) in flatt(diff).items():  # noqa: WPS414, WPS405
+        pattern = get_pattern(status)
+        if pattern:
+            plain_diff.append(pattern.format(key, *value))
+    return '\n'.join(plain_diff)
+
+
+def get_pattern(status):
+    return {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
-    }.get
-    plain_diff = []
-    for key, (status, *value) in flatt(diff).items():  # noqa: WPS414, WPS405
-        if get_pattern(status):
-            plain_diff.append(get_pattern(status).format(key, *value))
-    return '\n'.join(plain_diff)
+    }.get(status)
 
 
 def flatt(diff):
