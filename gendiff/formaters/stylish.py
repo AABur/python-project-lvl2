@@ -5,6 +5,7 @@ from gendiff.comparator import (
     ADDED,
     REMOVED,
     STATUS,
+    UPDATED,
     UPDATED_VALUE,
     VALUE,
 )
@@ -26,8 +27,8 @@ def prepare_stylish(source, indent=0):  # noqa: WPS210, WPS231
         status = node.get(STATUS) if isinstance(node, dict) else None
         new_indent = indent + INDENT_STEP
         value = node.get(VALUE) if status else node
-        updated_value = node.get(UPDATED_VALUE) if status else node
-        if updated_value:
+        if status == UPDATED:
+            updated_value = node.get(UPDATED_VALUE) if status else node
             output += create_item(key, REMOVED, value, new_indent)
             output += create_item(key, ADDED, updated_value, new_indent)
             continue
