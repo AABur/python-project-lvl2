@@ -20,7 +20,7 @@ def compile_diff(old, new):
     keys_intersection = old.keys() & new.keys()
     for key in keys_union:
         if key in keys_intersection:
-            compared[key] = compare_same_keys(old.get(key), new.get(key))
+            compared[key] = _compare_same_keys(old.get(key), new.get(key))
         elif key in keys_removed:
             compared[key] = {STATUS: REMOVED, VALUE: old.get(key)}
         else:  # key in keys_added
@@ -28,7 +28,7 @@ def compile_diff(old, new):
     return compared
 
 
-def compare_same_keys(old_value, new_value):
+def _compare_same_keys(old_value, new_value):
     if isinstance(old_value, dict) and isinstance(new_value, dict):
         return compile_diff(old_value, new_value)
     if old_value == new_value:
