@@ -27,7 +27,7 @@ def prepare_stylish(source, indent=0):  # noqa: WPS210, WPS231
         status = node.get(STATUS) if isinstance(node, dict) else None
         new_indent = indent + INDENT_STEP
 
-        # ! ATTANTION
+    # ! ATTANTION
         value = node.get(VALUE) if status else node
         prep_val = prepare_stylish(value, new_indent)
         updated_value = node.get(UPDATED_VALUE) if status else node
@@ -42,15 +42,12 @@ def prepare_stylish(source, indent=0):  # noqa: WPS210, WPS231
 
 
 def create_item(key, status, prep_val, indent):
+    get_status_sign = {
+        ADDED: '+ ',
+        REMOVED: '- ',
+    }.get
     prefix = LF_CH + HT_CH * indent
     status_sign = get_status_sign(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
     return '{0}{1}: {2}'.format(prefix, key, prep_val)
-
-
-def get_status_sign(status):
-    return {
-        ADDED: '+ ',
-        REMOVED: '- ',
-    }.get(status)

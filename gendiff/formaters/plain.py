@@ -19,51 +19,39 @@ REMOVED_STR = "Property '{0}' was removed"
 UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
-# FIXME noqa
-def prepare_plain(diff):
+def prepare_plain(diff):  # noqa: WPS210
     get_pattern = {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
     }.get
     plain_diff = []
-    flatt_diff = flatt(diff)
-    sorted_diff = sort_diff(flatt_diff)
+    sorted_diff = sort_diff(flatt(diff))
     for key, value in sorted_diff.items():
         pattern = get_pattern(value.get(STATUS))
         if pattern:
-            vvv = (format_value(value.get(VALUE)),
-                   format_value(value.get(UPDATED_VALUE)))
-            plain_diff.append(pattern.format(key, *vvv))
+            values = (
+                format_value(value.get(VALUE)),
+                format_value(value.get(UPDATED_VALUE)),
+            )
+            plain_diff.append(pattern.format(key, *values))
     return '\n'.join(plain_diff)
 
 
 def sort_diff(diff):
-    return diff
+    return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
-def flatt(diff):
+def flatt(nest):  # noqa: WPS210
     flatted = {}
-    for diff_key, diff_value in diff.items():
-        if diff_value.get(STATUS):
-            flatted[diff_key] = diff_value
+    for nest_key, nest_value in nest.items():
+        if nest_value.get(STATUS):
+            flatted[nest_key] = nest_value
         else:
-            for flatt_key, flatt_value in flatt(diff_value).items():
-                flatted[create_key(diff_key, flatt_key)] = flatt_value
+            for child_key, child_value in flatt(nest_value).items():
+                flatted_key = '{0}.{1}'.format(nest_key, child_key)
+                flatted[flatted_key] = child_value
     return flatted
-
-
-def create_key(diff_key, flatt_key):
-    return '{0}.{1}'.format(diff_key, flatt_key)
-
-
-def get_value(status, node):
-    if status != UPDATED:
-        added_value = format_value(node.get(VALUE))
-        return (status, added_value)
-    updated_from = format_value(node.get(VALUE))
-    updated_to = format_value(node.get(UPDATED_VALUE))
-    return (UPDATED, updated_from, updated_to)
 
 
 def format_value(value):
