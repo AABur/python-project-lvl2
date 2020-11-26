@@ -46,7 +46,7 @@ def flatten(nest, key, result):
     if nest.get(STATUS):
         result[key] = nest
     else:
-        for next_key in nest:
+        for next_key in nest.keys():
             new_key = '{0}.{1}'.format(key, next_key) if key else next_key
             flatten(nest[next_key], new_key, result)
     return result
