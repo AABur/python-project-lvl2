@@ -18,31 +18,36 @@ REMOVED_STR = "Property '{0}' was removed"
 UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
-# FIXME Found too many local variables: 7 > 5 flake8(WPS210)
+# FIXME Found too many local variables: 6 > 5 flake8(WPS210)
 def prepare_plain(diff):  # noqa: WPS210
-    get_pattern = {
+    plain_diff = []
+    sorted_diff = sort_diff(flatten(diff))
+    for diff_key, diff_value in sorted_diff.items():
+        pattern = get_pattern(diff_value.get(STATUS))
+        if pattern:
+            values = (
+                format_value(diff_value.get(VALUE)),
+                format_value(diff_value.get(UPDATED_VALUE)),
+            )
+            plain_diff.append(pattern.format(diff_key, *values))
+    return '\n'.join(plain_diff)
+
+
+def get_pattern(status):
+    return {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
-    }.get
-    plain_diff = []
-    sorted_diff = sort_diff(flatten(diff, '', {}))
-    for key, value in sorted_diff.items():
-        pattern = get_pattern(value.get(STATUS))
-        if pattern:
-            values = (
-                format_value(value.get(VALUE)),
-                format_value(value.get(UPDATED_VALUE)),
-            )
-            plain_diff.append(pattern.format(key, *values))
-    return '\n'.join(plain_diff)
+    }.get(status)
 
 
 def sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
-def flatten(nest, key, result):
+def flatten(nest, key='', result=None):
+    if result is None:
+        result = {}
     if nest.get(STATUS):
         result[key] = nest
     else:
