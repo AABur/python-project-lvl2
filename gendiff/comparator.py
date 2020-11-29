@@ -14,13 +14,13 @@ UPDATED_VALUE = 'updated_value'
 
 def compile_diff(old, new):
     compared = {}
-    keys_removed = old.keys() - new.keys()
-    keys_added = new.keys() - old.keys()
     keys_intersection = old.keys() & new.keys()
     for key in keys_intersection:
         compared[key] = _compare_same_keys(old.get(key), new.get(key))
+    keys_removed = old.keys() - new.keys()
     for key in keys_removed:  # noqa:WPS440
         compared[key] = {STATUS: REMOVED, VALUE: old.get(key)}  # noqa:WPS441
+    keys_added = new.keys() - old.keys()
     for key in keys_added:  # noqa:WPS440
         compared[key] = {STATUS: ADDED, VALUE: new.get(key)}  # noqa:WPS441
     return compared
