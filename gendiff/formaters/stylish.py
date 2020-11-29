@@ -15,7 +15,7 @@ HT_CH = ' '
 INDENT_STEP = 4
 
 
-def prepare_stylish(source, indent=0):  # noqa: WPS210, WPS231
+def prepare_stylish(source, indent=0):
     if isinstance(source, bool):
         return str(source).lower()
     if source is None:
@@ -24,30 +24,33 @@ def prepare_stylish(source, indent=0):  # noqa: WPS210, WPS231
         return source
     output = ''
     for key, node in source.items():
-        status = node.get(STATUS) if isinstance(node, dict) else None
         new_indent = indent + INDENT_STEP
-
-    # ! ATTANTION
-        value = node.get(VALUE) if status else node
-        prep_val = prepare_stylish(value, new_indent)
-        updated_value = node.get(UPDATED_VALUE) if status else node
-        prep_upd_val = prepare_stylish(updated_value, new_indent)
-
+        status = node.get(STATUS) if isinstance(node, dict) else None
+        if status is None:
+            value = prepare_stylish(node, new_indent)
+        else:
+            value = prepare_stylish(node.get(VALUE), new_indent)
+            updated_value = prepare_stylish(node.get(UPDATED_VALUE), new_indent)
         if status == UPDATED:
-            output += create_item(key, REMOVED, prep_val, new_indent)
-            output += create_item(key, ADDED, prep_upd_val, new_indent)
+            output += create_item(new_indent, REMOVED, key, value)
+            output += create_item(new_indent, ADDED, key, updated_value)
             continue
-        output += create_item(key, status, prep_val, new_indent)
+        output += create_item(new_indent, status, key, value)
     return '{{{0}}}'.format(output + LF_CH + HT_CH * indent)
 
 
-def create_item(key, status, prep_val, indent):
-    get_status_sign = {
+def create_item(indent, status, key, *prep_val):
+    prefix = create_prefix(status, indent)
+    result = '{0}{1}: {2}'.format(prefix, key, prep_val[0])
+    return result
+
+
+def create_prefix(status, indent):
+    prefix = LF_CH + HT_CH * indent
+    status_sign = {
         ADDED: '+ ',
         REMOVED: '- ',
-    }.get
-    prefix = LF_CH + HT_CH * indent
-    status_sign = get_status_sign(status)
+    }.get(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
-    return '{0}{1}: {2}'.format(prefix, key, prep_val)
+    return prefix
