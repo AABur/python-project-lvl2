@@ -15,13 +15,11 @@ HT_CH = ' '
 INDENT_STEP = 4
 
 
-def prepare_stylish(source):
-    sortedd = sort_dict(source)
-    stylish = pre_stylish(sortedd)
-    return stylish
+def format_stylish(source):
+    return prepare_stylish(sort_dict(source))
 
 
-def pre_stylish(source, indent=0):  # noqa:WPS210
+def prepare_stylish(source, indent=0):  # noqa: WPS210
     if isinstance(source, bool):
         return str(source).lower()
     if source is None:
@@ -34,22 +32,22 @@ def pre_stylish(source, indent=0):  # noqa:WPS210
         values = []
         status = node.get(STATUS) if isinstance(node, dict) else None
         if status is None:
-            values.append(pre_stylish(node, new_indent))
+            values.append(prepare_stylish(node, new_indent))
         else:
-            values.append(pre_stylish(node.get(VALUE), new_indent))
-            values.append(pre_stylish(node.get(UPDATED_VALUE), new_indent))
+            values.append(prepare_stylish(node.get(VALUE), new_indent))
+            values.append(prepare_stylish(node.get(UPDATED_VALUE), new_indent))
         output += create_item(new_indent, status, key, values)
     return '{{{0}}}'.format(output + LF_CH + HT_CH * indent)
 
 
 def sort_dict(item):
     result = {}
-    for k, v in sorted(item.items()):
-        is_sort = isinstance(v, dict) and (v.get(STATUS) is None)
+    for key, value in sorted(item.items()):
+        is_sort = isinstance(value, dict) and not value.get(STATUS)
         if is_sort:
-            result[k] = sort_dict(v)
+            result[key] = sort_dict(value)
         else:
-            result[k] = v
+            result[key] = value
     return result
 
 

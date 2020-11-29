@@ -1,18 +1,16 @@
 # -*- coding:utf-8 -*-
 """Generating plain text output."""
 
-from gendiff.formaters.json import prepare_json
-from gendiff.formaters.plain import prepare_plain
-from gendiff.formaters.stylish import prepare_stylish
+from gendiff.formaters.json import format_json
+from gendiff.formaters.plain import format_plain
+from gendiff.formaters.stylish import format_stylish
 
 STYLES = {  # noqa:WPS407
-    'json': prepare_json,
-    'plain': prepare_plain,
-    'stylish': prepare_stylish,
+    'json': format_json,
+    'plain': format_plain,
+    'stylish': format_stylish,
 }
 DEFAULT_STYLE = 'stylish'
-
-# TODO добавить проверку на правильный стиль
 
 
 def call_formater(diff, style=DEFAULT_STYLE):

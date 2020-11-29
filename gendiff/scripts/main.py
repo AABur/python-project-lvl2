@@ -15,7 +15,6 @@ from gendiff.arg_parser import arg_parser
 from gendiff.loader import FileError
 
 
-# TODO написать тесты
 def main():
     """Generate diff CLI.
 

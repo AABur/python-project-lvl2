@@ -19,6 +19,7 @@ class FileError(Exception):
         return 'MyCustomError has been raised'
 
 
+# TODO - exceptions
 def collect_data(file_path):
     _, ext = os.path.splitext(file_path)
     loader = {

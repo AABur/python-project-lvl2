@@ -18,8 +18,7 @@ REMOVED_STR = "Property '{0}' was removed"
 UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
-# FIXME Found too many local variables: 6 > 5 flake8(WPS210)
-def prepare_plain(diff):  # noqa: WPS210
+def format_plain(diff):  # noqa:WPS210
     plain_diff = []
     sorted_diff = sort_diff(flatten(diff))
     for diff_key, diff_value in sorted_diff.items():

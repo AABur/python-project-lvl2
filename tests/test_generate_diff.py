@@ -13,8 +13,6 @@ from gendiff import generate_diff
         ('plain', 'complex_before_path', 'complex_after_path', 'result_complex_plain'),
         ('stylish', 'simple_before_path', 'simple_after_path', 'result_simple_stylish'),  # noqa:E501
         ('stylish', 'complex_before_path', 'complex_after_path', 'result_complex_stylish'),  # noqa:E501
-        # ('json', 'simple_before_path', 'simple_after_path', 'result_simple_json'),
-        # ('json', 'complex_before_path', 'complex_after_path', 'result_complex_json'),
     ],
 )
 def test_generate_diff(style, file_before, fiel_after, file_result, request):

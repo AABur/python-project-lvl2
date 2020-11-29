@@ -5,7 +5,7 @@ import argparse
 from gendiff.formaters import DEFAULT_STYLE, STYLES
 
 
-# TODO написать тесты
+# TODO - tests
 def arg_parser():
     parser = argparse.ArgumentParser(
         description='Generate difference of two JSON or YAML files.',
