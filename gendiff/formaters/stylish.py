@@ -15,7 +15,7 @@ HT_CH = ' '
 INDENT_STEP = 4
 
 
-def prepare_stylish(source, indent=0):
+def prepare_stylish(source, indent=0):  # noqa:WPS210
     if isinstance(source, bool):
         return str(source).lower()
     if source is None:
@@ -25,24 +25,26 @@ def prepare_stylish(source, indent=0):
     output = ''
     for key, node in source.items():
         new_indent = indent + INDENT_STEP
+        values = []
         status = node.get(STATUS) if isinstance(node, dict) else None
         if status is None:
-            value = prepare_stylish(node, new_indent)
+            values.append(prepare_stylish(node, new_indent))
         else:
-            value = prepare_stylish(node.get(VALUE), new_indent)
-            updated_value = prepare_stylish(node.get(UPDATED_VALUE), new_indent)
-        if status == UPDATED:
-            output += create_item(new_indent, REMOVED, key, value)
-            output += create_item(new_indent, ADDED, key, updated_value)
-            continue
-        output += create_item(new_indent, status, key, value)
+            values.append(prepare_stylish(node.get(VALUE), new_indent))
+            values.append(prepare_stylish(node.get(UPDATED_VALUE), new_indent))
+        output += create_item(new_indent, status, key, values)
     return '{{{0}}}'.format(output + LF_CH + HT_CH * indent)
 
 
-def create_item(indent, status, key, *prep_val):
+def create_item(indent, status, key, prep_val):
+    if status == UPDATED:
+        prefix = create_prefix(REMOVED, indent)
+        result = '{0}{1}: {2}'.format(prefix, key, prep_val[0])
+        prefix = create_prefix(ADDED, indent)
+        result += '{0}{1}: {2}'.format(prefix, key, prep_val[1])
+        return result
     prefix = create_prefix(status, indent)
-    result = '{0}{1}: {2}'.format(prefix, key, prep_val[0])
-    return result
+    return '{0}{1}: {2}'.format(prefix, key, prep_val[0])
 
 
 def create_prefix(status, indent):
