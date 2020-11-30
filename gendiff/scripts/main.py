@@ -12,7 +12,6 @@ diff = generate_diff(file_path1, file_path2)
 """
 from gendiff import generate_diff
 from gendiff.arg_parser import arg_parser
-from gendiff.loader import FileError
 
 
 def main():
@@ -21,16 +20,13 @@ def main():
     CLI usage: gendiff [-h] [-f FORMAT] first_file second_file
     """
     args = arg_parser().parse_args()
-    try:
-        print(
-            generate_diff(
-                args.first_file,
-                args.second_file,
-                args.format,
-            ),
-        )
-    except FileError as error:
-        print(str(error))
+    print(
+        generate_diff(
+            args.first_file,
+            args.second_file,
+            args.format,
+        ),
+    )
 
 
 if __name__ == '__main__':

@@ -3,23 +3,17 @@
 
 import json
 import os
+import sys
 from json.decoder import JSONDecodeError
 
 import yaml
 from yaml.scanner import ScannerError
 
-
-class FileError(Exception):
-    def __init__(self, *args):
-        self.message = args[0] if args else None
-
-    def __str__(self):
-        if self.message:
-            return '{0} '.format(self.message)
-        return 'MyCustomError has been raised'
+EXT_ERROR_MSG = '\n{0} - invalid file extension\nuse one of: .json .yaml .yml'
+YAML_ERROR_MSG = '\n{0} - incorrect YAML file'
+JSON_ERROR_MSG = '\n{0} - incorrect JSON file'
 
 
-# TODO - exceptions
 def collect_data(file_path):
     _, ext = os.path.splitext(file_path)
     loader = {
@@ -27,12 +21,13 @@ def collect_data(file_path):
         '.yaml': yaml.safe_load,
         '.yml': yaml.safe_load,
     }.get(ext.lower())
+    sys.tracebacklimit = 0
     if not loader:
-        raise FileError(''.join(('Not correct JSON/YAML file ', file_path)))
+        raise RuntimeError(EXT_ERROR_MSG.format(file_path))
     try:
         with open(file_path) as data_file:
             return loader(data_file)
-    except (ScannerError, JSONDecodeError):
-        raise FileError(''.join(('Not correct JSON/YAML file ', file_path)))
-    except OSError as error:
-        raise FileError(''.join((error.args[1], ' ', file_path)))
+    except ScannerError as exc:
+        raise RuntimeError(YAML_ERROR_MSG.format(file_path)) from exc
+    except JSONDecodeError as exc:
+        raise RuntimeError(JSON_ERROR_MSG.format(file_path)) from exc
