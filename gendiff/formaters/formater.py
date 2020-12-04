@@ -13,5 +13,9 @@ STYLES = {  # noqa:WPS407
 DEFAULT_STYLE = 'stylish'
 
 
+# TODO style error exception
 def call_formater(diff, style=DEFAULT_STYLE):
-    return STYLES.get(style)(diff)
+    if style in STYLES.keys():
+        return STYLES.get(style)(diff)
+    else:
+        RuntimeError('STYLE ERROR!!!')
