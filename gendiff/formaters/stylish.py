@@ -20,13 +20,9 @@ def format_stylish(source):
 
 
 def prepare_stylish(source, indent=0):  # noqa: WPS210
-    if isinstance(source, bool):
-        return str(source).lower()
-    if source is None:
-        return 'null'
     if not isinstance(source, dict):
-        return source
-    output = ''
+        return format_simple_value(source)
+    output = []
     for key, node in source.items():
         new_indent = indent + INDENT_STEP
         values = []
@@ -36,8 +32,16 @@ def prepare_stylish(source, indent=0):  # noqa: WPS210
         else:
             values.append(prepare_stylish(node.get(VALUE), new_indent))
             values.append(prepare_stylish(node.get(UPDATED_VALUE), new_indent))
-        output += create_item(new_indent, status, key, values)
-    return '{{{0}}}'.format(output + LF_CH + HT_CH * indent)
+        output.append(create_item(new_indent, status, key, values))
+    return '{{{0}}}'.format(''.join(output) + LF_CH + HT_CH * indent)
+
+
+def format_simple_value(value):
+    if isinstance(value, bool):
+        return str(value).lower()
+    if value is None:
+        return 'null'
+    return value
 
 
 def sort_dict(item):
@@ -64,10 +68,14 @@ def create_item(indent, status, key, prep_val):
 
 def create_prefix(status, indent):
     prefix = LF_CH + HT_CH * indent
-    status_sign = {
-        ADDED: '+ ',
-        REMOVED: '- ',
-    }.get(status)
+    status_sign = get_status_sign()(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
     return prefix
+
+
+def get_status_sign():
+    return {
+        ADDED: '+ ',
+        REMOVED: '- ',
+    }.get
