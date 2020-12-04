@@ -20,9 +20,9 @@ UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 def format_plain(diff):  # noqa:WPS210
     plain_diff = []
-    sorted_diff = sort_diff(flatten(diff))
+    sorted_diff = _sort_diff(flatten(diff))
     for diff_key, diff_value in sorted_diff.items():
-        pattern = get_pattern(diff_value.get(STATUS))
+        pattern = _get_pattern()(diff_value.get(STATUS))
         if pattern:
             values = (
                 format_value(diff_value.get(VALUE)),
@@ -32,28 +32,27 @@ def format_plain(diff):  # noqa:WPS210
     return '\n'.join(plain_diff)
 
 
-def get_pattern(status):
+def _get_pattern():
     return {
         ADDED: ADDED_STR,
         REMOVED: REMOVED_STR,
         UPDATED: UPDATED_STR,
-    }.get(status)
+    }.get
 
 
-def sort_diff(diff):
+def _sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
 def flatten(nest, key='', result=None):
-    if result is None:
-        result = {}
+    new_result = {} if result is None else result
     if nest.get(STATUS):
-        result[key] = nest
-    else:
-        for next_key in nest.keys():
-            new_key = '{0}.{1}'.format(key, next_key) if key else next_key
-            flatten(nest[next_key], new_key, result)
-    return result
+        new_result[key] = nest
+        return new_result
+    for next_key in nest.keys():
+        new_key = '{0}.{1}'.format(key, next_key) if key else next_key
+        flatten(nest[next_key], new_key, new_result)
+    return new_result
 
 
 def format_value(value):
