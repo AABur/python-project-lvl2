@@ -24,9 +24,8 @@ def arg_parser():
         '-f',
         '--format',
         type=str,
+        choices=(STYLES.keys()),
         default=DEFAULT_STYLE,
-        help="set output format {0} (default: '{1}')".format(
-            list(STYLES.keys()), DEFAULT_STYLE,
-        ),
+        help="set output format (default: '{0}')".format(DEFAULT_STYLE),
     )
     return parser
