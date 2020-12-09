@@ -3,7 +3,6 @@
 
 import json
 import os
-import sys
 from json.decoder import JSONDecodeError
 
 import yaml
@@ -15,15 +14,21 @@ JSON_ERROR_MSG = '\n{0} - incorrect JSON file'
 OS_ERROR_MSG = '\n{0} - file access error'
 
 
+call_loader = {
+    '.json': json.load,
+    '.yaml': yaml.safe_load,
+    '.yml': yaml.safe_load,
+}.get
+
+
 class GendiffError(Exception):
-    pass
+    pass  # noqa: WPS420, WPS604
 
 
 # TODO error massage and traceback
 def collect_data(file_path):
     _, ext = os.path.splitext(file_path)
-    loader = _call_loader(ext)
-    sys.tracebacklimit = 0
+    loader = call_loader(ext.lower())
     if not loader:
         raise RuntimeError(EXT_ERROR_MSG.format(file_path))
     try:
@@ -35,11 +40,3 @@ def collect_data(file_path):
         raise GendiffError(JSON_ERROR_MSG.format(file_path))
     except OSError:
         raise GendiffError(OS_ERROR_MSG.format(file_path))
-
-
-def _call_loader(ext):
-    return {
-        '.json': json.load,
-        '.yaml': yaml.safe_load,
-        '.yml': yaml.safe_load,
-    }.get(ext.lower())

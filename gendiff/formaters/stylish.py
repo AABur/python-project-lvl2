@@ -15,6 +15,12 @@ HT_CH = ' '
 INDENT_STEP = 4
 
 
+get_status_sign = {
+    ADDED: '+ ',
+    REMOVED: '- ',
+}.get
+
+
 def format_stylish(source):
     return prepare_stylish(sort_dict(source))
 
@@ -68,14 +74,7 @@ def create_item(indent, status, key, prep_val):
 
 def create_prefix(status, indent):
     prefix = LF_CH + HT_CH * indent
-    status_sign = get_status_sign()(status)
+    status_sign = get_status_sign(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
     return prefix
-
-
-def get_status_sign():
-    return {
-        ADDED: '+ ',
-        REMOVED: '- ',
-    }.get
