@@ -26,10 +26,14 @@ def format_stylish(source):
     return prepare_stylish(sorted_source)
 
 
+# FIXME - обработка случая когда 'staus' - это реальный ключ
 def sort_dict(item):
     result = {}
     for key, value in sorted(item.items()):
-        is_sort = isinstance(value, dict) and not value.get(STATUS)
+        status = value.get(STATUS)
+        if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
+            status = None
+        is_sort = isinstance(value, dict) and not status
         if is_sort:
             result[key] = sort_dict(value)
         else:
@@ -37,13 +41,16 @@ def sort_dict(item):
     return result
 
 
-def prepare_stylish(source, indent=0):  # noqa: WPS210
+# FIXME - обработка случая когда 'staus' - это реальный ключ
+def prepare_stylish(source, indent=0):  # noqa: WPS210 WPS231
     if not isinstance(source, dict):
         return format_simple_value(source)
     output = []
     for key, node in source.items():
         new_indent = indent + INDENT_STEP
         status = node.get(STATUS) if isinstance(node, dict) else None
+        if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
+            status = None
         if status == UPDATED:
             value = prepare_stylish(node.get(VALUE), new_indent)
             output.append(create_item(new_indent, REMOVED, key, value))

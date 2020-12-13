@@ -43,9 +43,11 @@ def _sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
+# FIXME - обработка случая когда 'staus' - это реальный ключ
 def flatten(nest, key='', result=None):
     new_result = {} if result is None else result
-    if nest.get(STATUS):
+    status = nest.get(STATUS)
+    if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!!
         new_result[key] = nest
         return new_result
     for next_key in nest.keys():
