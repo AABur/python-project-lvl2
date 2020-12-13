@@ -1,4 +1,4 @@
-Property 'follow' was removed
-Property 'proxy' was removed
-Property 'timeout' was updated. From 50 to 20
-Property 'verbose' was added with value: true
+Property 'added' was added with value: null
+Property 'removed' was removed
+Property 'status' was removed
+Property 'updated' was updated. From 'value' to 'updated_value'

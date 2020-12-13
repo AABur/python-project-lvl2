@@ -1,8 +1,8 @@
 {
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
+  + added: null
+  - removed: false
+  - status: 123.234.53.22
+    unchanged: 123
+  - updated: value
+  + updated: updated_value
 }

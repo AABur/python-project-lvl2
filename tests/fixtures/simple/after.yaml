@@ -1,4 +1,4 @@
 ---
-timeout: 20
-verbose: true
-host: hexlet.io
+updated: updated_value
+added: null
+unchanged: 123
