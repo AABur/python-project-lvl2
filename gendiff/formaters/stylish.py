@@ -21,47 +21,47 @@ get_status_sign = {
 }.get
 
 
-def format_stylish(source):
-    sorted_source = sort_dict(source)
-    return prepare_stylish(sorted_source)
+def format_stylish(diff):
+    sorted_diff = sort_dict(diff)
+    return prepare_stylish(sorted_diff)
 
 
 # FIXME - обработка случая когда 'staus' - это реальный ключ
-def sort_dict(item):
-    result = {}
-    for key, value in sorted(item.items()):
-        status = value.get(STATUS)
+def sort_dict(node):
+    sorted_dict = {}
+    for node_key, node_value in sorted(node.items()):
+        status = node_value.get(STATUS)
         if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
             status = None
-        is_sort = isinstance(value, dict) and not status
+        is_sort = isinstance(node_value, dict) and not status
         if is_sort:
-            result[key] = sort_dict(value)
+            sorted_dict[node_key] = sort_dict(node_value)
         else:
-            result[key] = value
-    return result
+            sorted_dict[node_key] = node_value
+    return sorted_dict
 
 
-# FIXME - обработка случая когда 'staus' - это реальный ключ
-def prepare_stylish(source, indent=0):  # noqa: WPS210 WPS231
-    if not isinstance(source, dict):
-        return format_simple_value(source)
+# FIXME ! КОСТЫЛЬ - обработка случая когда 'staus' - это реальный ключ
+def prepare_stylish(node, indent=0):  # noqa: WPS210 WPS231
+    if not isinstance(node, dict):
+        return format_simple_value(node)
     output = []
-    for key, node in source.items():
+    for node_key, node_value in node.items():
         new_indent = indent + INDENT_STEP
-        status = node.get(STATUS) if isinstance(node, dict) else None
+        status = node_value.get(STATUS) if isinstance(node_value, dict) else None  # noqa:E501
         if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
             status = None
         if status == UPDATED:
-            value = prepare_stylish(node.get(VALUE), new_indent)
-            output.append(create_item(new_indent, REMOVED, key, value))
-            value = prepare_stylish(node.get(UPDATED_VALUE), new_indent)
-            output.append(create_item(new_indent, ADDED, key, value))
+            value = prepare_stylish(node_value.get(VALUE), new_indent)
+            output.append(create_item(new_indent, REMOVED, node_key, value))
+            value = prepare_stylish(node_value.get(UPDATED_VALUE), new_indent)
+            output.append(create_item(new_indent, ADDED, node_key, value))
             continue
         if status is None:
-            value = prepare_stylish(node, new_indent)
+            value = prepare_stylish(node_value, new_indent)
         else:
-            value = prepare_stylish(node.get(VALUE), new_indent)
-        output.append(create_item(new_indent, status, key, value))
+            value = prepare_stylish(node_value.get(VALUE), new_indent)
+        output.append(create_item(new_indent, status, node_key, value))
     return '{{{0}}}'.format(''.join(output) + LF_CH + HT_CH * indent)
 
 
@@ -73,9 +73,9 @@ def format_simple_value(value):
     return value
 
 
-def create_item(indent, status, key, prep_val):
+def create_item(indent, status, key, value):
     prefix = create_prefix(status, indent)
-    return '{0}{1}: {2}'.format(prefix, key, prep_val)
+    return '{0}{1}: {2}'.format(prefix, key, value)
 
 
 def create_prefix(status, indent):

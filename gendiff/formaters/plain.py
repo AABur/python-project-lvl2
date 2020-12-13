@@ -27,7 +27,7 @@ get_pattern = {
 
 def format_plain(diff):  # noqa:WPS210
     plain_diff = []
-    sorted_diff = _sort_diff(flatten(diff))
+    sorted_diff = sort_diff(flatten(diff))
     for diff_key, diff_value in sorted_diff.items():
         pattern = get_pattern(diff_value.get(STATUS))
         if pattern:
@@ -39,20 +39,20 @@ def format_plain(diff):  # noqa:WPS210
     return '\n'.join(plain_diff)
 
 
-def _sort_diff(diff):
+def sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
 # FIXME - обработка случая когда 'staus' - это реальный ключ
-def flatten(nest, key='', result=None):
+def flatten(diff, diff_key='', result=None):
     new_result = {} if result is None else result
-    status = nest.get(STATUS)
+    status = diff.get(STATUS)
     if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!!
-        new_result[key] = nest
+        new_result[diff_key] = diff
         return new_result
-    for next_key in nest.keys():
-        new_key = '{0}.{1}'.format(key, next_key) if key else next_key
-        flatten(nest[next_key], new_key, new_result)
+    for next_key in diff.keys():
+        new_key = '{0}.{1}'.format(diff_key, next_key) if diff_key else next_key
+        flatten(diff[next_key], new_key, new_result)
     return new_result
 
 
