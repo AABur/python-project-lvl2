@@ -22,7 +22,19 @@ get_status_sign = {
 
 
 def format_stylish(source):
-    return prepare_stylish(sort_dict(source))
+    sorted_source = sort_dict(source)
+    return prepare_stylish(sorted_source)
+
+
+def sort_dict(item):
+    result = {}
+    for key, value in sorted(item.items()):
+        is_sort = isinstance(value, dict) and not value.get(STATUS)
+        if is_sort:
+            result[key] = sort_dict(value)
+        else:
+            result[key] = value
+    return result
 
 
 def prepare_stylish(source, indent=0):  # noqa: WPS210
@@ -48,17 +60,6 @@ def format_simple_value(value):
     if value is None:
         return 'null'
     return value
-
-
-def sort_dict(item):
-    result = {}
-    for key, value in sorted(item.items()):
-        is_sort = isinstance(value, dict) and not value.get(STATUS)
-        if is_sort:
-            result[key] = sort_dict(value)
-        else:
-            result[key] = value
-    return result
 
 
 def create_item(indent, status, key, prep_val):
