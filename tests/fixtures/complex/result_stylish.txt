@@ -9,7 +9,7 @@
       + setting5: {
             key5: value5
         }
-        setting6: {
+        status: {
             doge: {
               - wow: 
               + wow: so much
