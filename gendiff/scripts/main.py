@@ -10,9 +10,9 @@ function usage:
 from gendiff import generate_diff
 diff = generate_diff(file_path1, file_path2)
 """
-from gendiff.loader import GendiffError
 from gendiff import generate_diff
 from gendiff.arg_parser import arg_parser
+from gendiff.loader import GendiffError
 
 
 def main():
