@@ -43,7 +43,7 @@ def sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
-# FIXME - обработка случая когда 'staus' - это реальный ключ
+# FIXME ! КОСТЫЛЬ - обработка случая когда 'staus' - это реальный ключ
 def flatten(diff, diff_key='', result=None):
     new_result = {} if result is None else result
     status = diff.get(STATUS)

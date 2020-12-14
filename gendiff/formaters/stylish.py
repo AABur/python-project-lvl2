@@ -26,7 +26,7 @@ def format_stylish(diff):
     return prepare_stylish(sorted_diff)
 
 
-# FIXME - обработка случая когда 'staus' - это реальный ключ
+# FIXME ! КОСТЫЛЬ - обработка случая когда 'staus' - это реальный ключ
 def sort_dict(node):
     sorted_dict = {}
     for node_key, node_value in sorted(node.items()):
