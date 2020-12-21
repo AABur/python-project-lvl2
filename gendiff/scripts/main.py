@@ -12,7 +12,7 @@ diff = generate_diff(file_path1, file_path2)
 """
 from gendiff import generate_diff
 from gendiff.arg_parser import arg_parser
-from gendiff.loader import GendiffError
+from gendiff.loader import GendiffFileError
 
 
 def main():
@@ -29,8 +29,8 @@ def main():
                 args.format,
             ),
         )
-    except GendiffError as err:
-        print(err.args)
+    except GendiffFileError as err:
+        print(err)
 
 
 if __name__ == '__main__':

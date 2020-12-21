@@ -2,7 +2,7 @@
 """argparser."""
 import argparse
 
-from gendiff.formaters import DEFAULT_STYLE, STYLES
+from gendiff.formaters import DEFAULT_STYLE, FORMATERS
 
 
 # TODO - tests
@@ -24,7 +24,7 @@ def arg_parser():
         '-f',
         '--format',
         type=str,
-        choices=(STYLES.keys()),
+        choices=(FORMATERS.keys()),
         default=DEFAULT_STYLE,
         help="set output format (default: '{0}')".format(DEFAULT_STYLE),
     )

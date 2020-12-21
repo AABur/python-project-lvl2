@@ -5,17 +5,21 @@ from gendiff.formaters.json import format_json
 from gendiff.formaters.plain import format_plain
 from gendiff.formaters.stylish import format_stylish
 
-STYLES = {  # noqa:WPS407
+FORMATERS = {  # noqa:WPS407
     'json': format_json,
     'plain': format_plain,
     'stylish': format_stylish,
 }
 DEFAULT_STYLE = 'stylish'
+STYLE_ERROR_MSG = 'Output format {0} is invalid. Chose one of {1}'
 
 
-# TODO style error exception
+class GendiffFormaterError(Exception):
+    pass  # noqa: WPS420, WPS604
+
+
 def call_formater(diff, style=DEFAULT_STYLE):
-    if style in STYLES.keys():
-        return STYLES.get(style)(diff)
-    else:
-        RuntimeError('STYLE ERROR!!!')
+    styles = FORMATERS.keys()
+    if style in styles:
+        return FORMATERS.get(style)(diff)
+    raise GendiffFormaterError(STYLE_ERROR_MSG.format(style, list(styles)))
