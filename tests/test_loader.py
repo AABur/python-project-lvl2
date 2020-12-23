@@ -12,7 +12,7 @@ from gendiff.loader import GendiffFileError, collect_data
         ('tests/fixtures/wrong_ext.ttt'),
         ('tests/fixtures/wrong_json.json'),
         ('tests/fixtures/wrong_yaml.yaml'),
-        ('file_no_exists'),
+        ('file_not_exists'),
     ],
 )
 def test_wrong_file(file_path):
