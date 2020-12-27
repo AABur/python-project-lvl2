@@ -18,24 +18,21 @@ REMOVED_STR = "Property '{0}' was removed"
 UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
-get_pattern = {
-    ADDED: ADDED_STR,
-    REMOVED: REMOVED_STR,
-    UPDATED: UPDATED_STR,
-}.get
-
-
 def format_plain(diff):  # noqa:WPS210
     plain_diff = []
     sorted_diff = sort_diff(flatten(diff))
     for diff_key, diff_value in sorted_diff.items():
-        pattern = get_pattern(diff_value.get(STATUS))
-        if pattern:
-            values = (
-                format_value(diff_value.get(VALUE)),
-                format_value(diff_value.get(UPDATED_VALUE)),
-            )
-            plain_diff.append(pattern.format(diff_key, *values))
+        status = diff_value.get(STATUS)
+        value = format_value(diff_value.get(VALUE))
+        if status == ADDED:
+            plain_diff.append(ADDED_STR.format(diff_key, value))
+        elif status == REMOVED:
+            plain_diff.append(REMOVED_STR.format(diff_key))
+        elif status == UPDATED:
+            updated_value = format_value(diff_value.get(UPDATED_VALUE))
+            plain_diff.append(UPDATED_STR.format(
+                diff_key, value, updated_value,
+            ))
     return '\n'.join(plain_diff)
 
 
