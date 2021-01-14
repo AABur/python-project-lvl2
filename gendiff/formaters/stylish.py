@@ -10,8 +10,8 @@ from gendiff.comparator import (
     VALUE,
 )
 
-LF_CH = '\n'
-HT_CH = ' '
+LF_CHAR = '\n'
+INDENT_CHAR = ' '
 INDENT_STEP = 4
 
 
@@ -22,29 +22,13 @@ get_status_sign = {
 
 
 def format_stylish(diff):
-    sorted_diff = sort_dict(diff)
-    return prepare_stylish(sorted_diff)
+    return prepare_stylish(sort_diff(diff))
 
 
-# FIXME ! КОСТЫЛЬ - обработка случая когда 'staus' - это реальный ключ
-def sort_dict(node):
-    sorted_dict = {}
-    for node_key, node_value in sorted(node.items()):
-        status = node_value.get(STATUS)
-        if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
-            status = None
-        is_sort = isinstance(node_value, dict) and not status
-        if is_sort:
-            sorted_dict[node_key] = sort_dict(node_value)
-        else:
-            sorted_dict[node_key] = node_value
-    return sorted_dict
-
-
-# FIXME ! КОСТЫЛЬ - обработка случая когда 'staus' - это реальный ключ
+# FIXME ! КОСТЫЛЬ - обработка случая когда 'status' - это реальный ключ
 def prepare_stylish(node, indent=0):  # noqa: WPS210 WPS231
     if not isinstance(node, dict):
-        return format_simple_value(node)
+        return format_value(node)
     output = []
     for node_key, node_value in node.items():
         new_indent = indent + INDENT_STEP
@@ -62,10 +46,10 @@ def prepare_stylish(node, indent=0):  # noqa: WPS210 WPS231
         else:
             value = prepare_stylish(node_value.get(VALUE), new_indent)
         output.append(create_item(new_indent, status, node_key, value))
-    return '{{{0}}}'.format(''.join(output) + LF_CH + HT_CH * indent)
+    return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)
 
 
-def format_simple_value(value):
+def format_value(value):
     if isinstance(value, bool):
         return str(value).lower()
     if value is None:
@@ -79,8 +63,24 @@ def create_item(indent, status, key, value):
 
 
 def create_prefix(status, indent):
-    prefix = LF_CH + HT_CH * indent
+    prefix = LF_CHAR + INDENT_CHAR * indent
     status_sign = get_status_sign(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
     return prefix
+
+
+# FIXME ! КОСТЫЛЬ - обработка случая когда 'status' - это реальный ключ
+def sort_diff(node):
+    sorted_diff = {}
+    for node_key, node_value in sorted(node.items()):
+        status = node_value.get(STATUS)
+        if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
+            status = None
+        # FIXME remove need_sort
+        need_sort = isinstance(node_value, dict) and not status
+        if need_sort:
+            sorted_diff[node_key] = sort_diff(node_value)
+        else:
+            sorted_diff[node_key] = node_value
+    return sorted_diff

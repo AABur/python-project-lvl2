@@ -14,25 +14,25 @@ UPDATED_VALUE = 'updated_value'
 
 # * Fixed WPS441, WPS440 to allow variable names to be reused in multiple loops
 # * https://github.com/wemake-services/wemake-python-styleguide/pull/1768#pullrequestreview-550906165 # noqa:E501
-def compile_diff(old_data, new_data):
+def compile_diff(first_data_set, second_data_set):
     diff = {}
-    keys_intersection = old_data.keys() & new_data.keys()
+    keys_intersection = first_data_set.keys() & second_data_set.keys()
     for data_key in keys_intersection:
-        diff[data_key] = _compare_same_keys(
-            old_data.get(data_key), new_data.get(data_key),
+        diff[data_key] = compare_same_keys(
+            first_data_set.get(data_key), second_data_set.get(data_key),
         )
-    keys_removed = old_data.keys() - new_data.keys()
+    keys_removed = first_data_set.keys() - second_data_set.keys()
     for data_key in keys_removed:  # noqa:WPS440
-        diff[data_key] = {STATUS: REMOVED, VALUE: old_data.get(data_key)}  # noqa:WPS441, E501
-    keys_added = new_data.keys() - old_data.keys()
+        diff[data_key] = {STATUS: REMOVED, VALUE: first_data_set.get(data_key)}  # noqa:WPS441, E501
+    keys_added = second_data_set.keys() - first_data_set.keys()
     for data_key in keys_added:  # noqa:WPS440
-        diff[data_key] = {STATUS: ADDED, VALUE: new_data.get(data_key)}  # noqa:WPS441, E501
+        diff[data_key] = {STATUS: ADDED, VALUE: second_data_set.get(data_key)}  # noqa:WPS441, E501
     return diff
 
 
-def _compare_same_keys(old_value, new_value):
-    if isinstance(old_value, dict) and isinstance(new_value, dict):
-        return compile_diff(old_value, new_value)
-    if old_value == new_value:
-        return {STATUS: UNCHANGED, VALUE: old_value}
-    return {STATUS: UPDATED, VALUE: old_value, UPDATED_VALUE: new_value}
+def compare_same_keys(first_value, second_value):
+    if isinstance(first_value, dict) and isinstance(second_value, dict):
+        return compile_diff(first_value, second_value)
+    if first_value == second_value:
+        return {STATUS: UNCHANGED, VALUE: first_value}
+    return {STATUS: UPDATED, VALUE: first_value, UPDATED_VALUE: second_value}

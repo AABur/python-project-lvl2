@@ -40,11 +40,11 @@ def sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
-# FIXME ! КОСТЫЛЬ - обработка случая когда 'staus' - это реальный ключ
+# FIXME ! КОСТЫЛЬ - обработка случая когда 'status' - это реальный ключ
 def flatten(diff, diff_key='', result=None):
     new_result = {} if result is None else result
     status = diff.get(STATUS)
-    if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!! issue test
+    if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!!
         new_result[diff_key] = diff
         return new_result
     for next_key in diff.keys():
