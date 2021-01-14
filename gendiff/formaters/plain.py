@@ -44,7 +44,7 @@ def sort_diff(diff):
 def flatten(diff, diff_key='', result=None):
     new_result = {} if result is None else result
     status = diff.get(STATUS)
-    if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!!
+    if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!! issue test
         new_result[diff_key] = diff
         return new_result
     for next_key in diff.keys():
