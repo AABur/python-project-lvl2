@@ -4,6 +4,7 @@
 
 from gendiff.comparator import (
     ADDED,
+    NESTED,
     REMOVED,
     STATUS,
     UPDATED,
@@ -40,17 +41,15 @@ def sort_diff(diff):
     return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
-# FIXME ! КОСТЫЛЬ - обработка случая когда 'status' - это реальный ключ
-def flatten(diff, diff_key='', result=None):
-    new_result = {} if result is None else result
-    status = diff.get(STATUS)
-    if status and not isinstance(status, dict):  # ! КОСТЫЛЬ!!!
-        new_result[diff_key] = diff
-        return new_result
-    for next_key in diff.keys():
-        new_key = '{0}.{1}'.format(diff_key, next_key) if diff_key else next_key
-        flatten(diff[next_key], new_key, new_result)
-    return new_result
+def flatten(node, prefix='', flatt=None):
+    flatted = {} if flatt is None else flatt
+    for node_key, node_value in node.items():
+        new_key = '{0}.{1}'.format(prefix, node_key) if prefix else node_key
+        if node_value[STATUS] == NESTED:
+            flatten(node_value[VALUE], new_key, flatted)
+        else:
+            flatted[new_key] = node_value
+    return flatted
 
 
 def format_value(value):
