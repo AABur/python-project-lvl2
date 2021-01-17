@@ -4,6 +4,7 @@
 STATUS = 'status'
 
 ADDED = 'added'
+NESTED = 'nested'
 REMOVED = 'removed'
 UNCHANGED = 'unchanged'
 UPDATED = 'updated'
@@ -32,7 +33,7 @@ def compile_diff(first_data_set, second_data_set):
 
 def compare_same_keys(first_value, second_value):
     if isinstance(first_value, dict) and isinstance(second_value, dict):
-        return compile_diff(first_value, second_value)
+        return {STATUS: NESTED, VALUE: compile_diff(first_value, second_value)}
     if first_value == second_value:
         return {STATUS: UNCHANGED, VALUE: first_value}
     return {STATUS: UPDATED, VALUE: first_value, UPDATED_VALUE: second_value}
