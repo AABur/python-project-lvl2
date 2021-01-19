@@ -75,7 +75,7 @@ def sort_diff(node):
         if status == NESTED:
             sorted_diff[node_key] = {
                 STATUS: NESTED,
-                VALUE: sort_diff(node_value[VALUE])
+                VALUE: sort_diff(node_value[VALUE]),
             }
         else:
             sorted_diff[node_key] = node_value
