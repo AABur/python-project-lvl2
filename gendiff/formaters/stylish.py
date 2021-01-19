@@ -3,6 +3,7 @@
 
 from gendiff.comparator import (
     ADDED,
+    NESTED,
     REMOVED,
     STATUS,
     UPDATED,
@@ -25,7 +26,6 @@ def format_stylish(diff):
     return prepare_stylish(sort_diff(diff))
 
 
-# FIXME ! КОСТЫЛЬ - обработка случая когда 'status' - это реальный ключ
 def prepare_stylish(node, indent=0):  # noqa: WPS210 WPS231
     if not isinstance(node, dict):
         return format_value(node)
@@ -33,8 +33,6 @@ def prepare_stylish(node, indent=0):  # noqa: WPS210 WPS231
     for node_key, node_value in node.items():
         new_indent = indent + INDENT_STEP
         status = node_value.get(STATUS) if isinstance(node_value, dict) else None  # noqa:E501
-        if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
-            status = None
         if status == UPDATED:
             value = prepare_stylish(node_value.get(VALUE), new_indent)
             output.append(create_item(new_indent, REMOVED, node_key, value))
@@ -70,17 +68,15 @@ def create_prefix(status, indent):
     return prefix
 
 
-# FIXME ! КОСТЫЛЬ - обработка случая когда 'status' - это реальный ключ
 def sort_diff(node):
     sorted_diff = {}
     for node_key, node_value in sorted(node.items()):
         status = node_value.get(STATUS)
-        if isinstance(status, dict):  # ! КОСТЫЛЬ!!!
-            status = None
-        # FIXME remove need_sort
-        need_sort = isinstance(node_value, dict) and not status
-        if need_sort:
-            sorted_diff[node_key] = sort_diff(node_value)
+        if status == NESTED:
+            sorted_diff[node_key] = {
+                STATUS: NESTED,
+                VALUE: sort_diff(node_value[VALUE])
+            }
         else:
             sorted_diff[node_key] = node_value
     return sorted_diff
