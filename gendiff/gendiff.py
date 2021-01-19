@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-"""Calculate difference."""
 
 from gendiff.comparator import compile_diff
 from gendiff.formaters import DEFAULT_STYLE, call_formater

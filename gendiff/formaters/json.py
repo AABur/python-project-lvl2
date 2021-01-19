@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-"""Generating plain text output."""
 
 import json
 

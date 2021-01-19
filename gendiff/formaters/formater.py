@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-"""Generating plain text output."""
 
 from gendiff.formaters.json import format_json
 from gendiff.formaters.plain import format_plain

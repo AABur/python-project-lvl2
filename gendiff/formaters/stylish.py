@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-"""Generating stylish text output."""
 
 from gendiff.comparator import (
     ADDED,
@@ -26,23 +25,23 @@ def format_stylish(diff):
     return prepare_stylish(sort_diff(diff))
 
 
-def prepare_stylish(node, indent=0):  # noqa: WPS210 WPS231
+def prepare_stylish(node, indent=0):  # noqa: WPS210
     if not isinstance(node, dict):
         return format_value(node)
     output = []
     for node_key, node_value in node.items():
         new_indent = indent + INDENT_STEP
-        status = node_value.get(STATUS) if isinstance(node_value, dict) else None  # noqa:E501
+        status = node_value.get(STATUS) if isinstance(node_value, dict) else None  # noqa: E501
         if status == UPDATED:
-            value = prepare_stylish(node_value.get(VALUE), new_indent)
+            value = prepare_stylish(node_value[VALUE], new_indent)
             output.append(create_item(new_indent, REMOVED, node_key, value))
-            value = prepare_stylish(node_value.get(UPDATED_VALUE), new_indent)
+            value = prepare_stylish(node_value[UPDATED_VALUE], new_indent)
             output.append(create_item(new_indent, ADDED, node_key, value))
             continue
         if status is None:
             value = prepare_stylish(node_value, new_indent)
         else:
-            value = prepare_stylish(node_value.get(VALUE), new_indent)
+            value = prepare_stylish(node_value[VALUE], new_indent)
         output.append(create_item(new_indent, status, node_key, value))
     return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)
 
@@ -55,9 +54,9 @@ def format_value(value):
     return value
 
 
-def create_item(indent, status, key, value):
+def create_item(indent, status, node_key, node_value):
     prefix = create_prefix(status, indent)
-    return '{0}{1}: {2}'.format(prefix, key, value)
+    return '{0}{1}: {2}'.format(prefix, node_key, node_value)
 
 
 def create_prefix(status, indent):
@@ -71,7 +70,7 @@ def create_prefix(status, indent):
 def sort_diff(node):
     sorted_diff = {}
     for node_key, node_value in sorted(node.items()):
-        status = node_value.get(STATUS)
+        status = node_value[STATUS]
         if status == NESTED:
             sorted_diff[node_key] = {
                 STATUS: NESTED,

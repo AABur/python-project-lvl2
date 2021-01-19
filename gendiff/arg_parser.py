@@ -1,11 +1,10 @@
 # -*- coding:utf-8 -*-
-"""argparser."""
+
 import argparse
 
 from gendiff.formaters import DEFAULT_STYLE, FORMATERS
 
 
-# TODO - tests
 def arg_parser():
     parser = argparse.ArgumentParser(
         description='Generate difference of two JSON or YAML files.',

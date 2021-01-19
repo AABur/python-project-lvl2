@@ -1,6 +1,4 @@
 # -*- coding:utf-8 -*-
-"""Generating plain text output."""
-
 
 from gendiff.comparator import (
     ADDED,
