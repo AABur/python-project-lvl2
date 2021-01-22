@@ -19,8 +19,7 @@ UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 def format_plain(diff):  # noqa:WPS210
     plain_diff = []
-    sorted_diff = sort_diff(flatten(diff))
-    for diff_key, diff_value in sorted_diff.items():
+    for diff_key, diff_value in sorted(flatten(diff).items()):
         status = diff_value.get(STATUS)
         value = format_value(diff_value.get(VALUE))
         if status == ADDED:
@@ -33,10 +32,6 @@ def format_plain(diff):  # noqa:WPS210
                 diff_key, value, updated_value,
             ))
     return '\n'.join(plain_diff)
-
-
-def sort_diff(diff):
-    return dict(sorted(diff.items(), key=lambda item: item[0]))
 
 
 def flatten(node, prefix='', flatt=None):
@@ -59,4 +54,4 @@ def format_value(value):
         return 'null'
     if isinstance(value, str):
         return "'{0}'".format(value)
-    return value
+    return str(value)
