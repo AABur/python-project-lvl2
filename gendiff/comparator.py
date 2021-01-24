@@ -15,12 +15,10 @@ UPDATED_VALUE = 'updated_value'
 # * Fixed WPS441, WPS440 to allow variable names to be reused in multiple loops
 # * https://github.com/wemake-services/wemake-python-styleguide/pull/1768#pullrequestreview-550906165 # noqa:E501
 def compile_diff(first_data_set, second_data_set):
-    diff = {}
     keys_intersection = first_data_set.keys() & second_data_set.keys()
-    for data_key in keys_intersection:
-        diff[data_key] = compare_same_keys(
+    diff = {data_key: compare_same_keys(
             first_data_set.get(data_key), second_data_set.get(data_key),
-        )
+        ) for data_key in keys_intersection}
     keys_removed = first_data_set.keys() - second_data_set.keys()
     for data_key in keys_removed:  # noqa:WPS440
         diff[data_key] = {STATUS: REMOVED, VALUE: first_data_set.get(data_key)}  # noqa:WPS441, E501
