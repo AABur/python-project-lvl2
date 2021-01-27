@@ -21,43 +21,47 @@ get_status_sign = {
 }.get
 
 
-def format_stylish(node, indent=0):  # noqa: WPS210
-    output = []
-    for node_key, node_value in sorted(node.items()):
+def format_stylish(diff, indent=0):  # noqa: WPS210
+    stylish = []
+    for diff_key, diff_value in sorted(diff.items()):
         new_indent = indent + INDENT_STEP
-        status = node_value.get(STATUS)
+        status = diff_value.get(STATUS)
         if status == UPDATED:
-            value = format_value(node_value[VALUE], new_indent)
-            output.append(create_item(new_indent, REMOVED, node_key, value))
-            value = format_value(node_value[UPDATED_VALUE], new_indent)
-            output.append(create_item(new_indent, ADDED, node_key, value))
+            value = format_value(diff_value[VALUE], new_indent)
+            stylish.append(add_prefix(new_indent, REMOVED, diff_key, value))
+            value = format_value(diff_value[UPDATED_VALUE], new_indent)
+            stylish.append(add_prefix(new_indent, ADDED, diff_key, value))
             continue
         if status == NESTED:
-            value = format_stylish(node_value[VALUE], new_indent)
+            value = format_stylish(diff_value[VALUE], new_indent)
         else:
-            value = format_value(node_value[VALUE], new_indent)
-        output.append(create_item(new_indent, status, node_key, value))
-    return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)
+            value = format_value(diff_value[VALUE], new_indent)
+        stylish.append(add_prefix(new_indent, status, diff_key, value))
+    return compose_stylish(indent, stylish)
 
 
-def format_value(node, indent):
-    if isinstance(node, dict):
-        output = []
-        for node_key, node_value in node.items():
+def format_value(value, indent):
+    if isinstance(value, dict):
+        stylish = []
+        for node_key, node_value in value.items():
             new_indent = indent + INDENT_STEP
             value = format_value(node_value, new_indent)
-            output.append(create_item(new_indent, None, node_key, value))
-        return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)  # noqa: E501
-    if isinstance(node, bool):
-        return str(node).lower()
-    if node is None:
+            stylish.append(add_prefix(new_indent, None, node_key, value))
+        return compose_stylish(indent, stylish)
+    if isinstance(value, bool):
+        return str(value).lower()
+    if value is None:
         return 'null'
-    return str(node)
+    return str(value)
 
 
-def create_item(indent, status, node_key, node_value):
+def add_prefix(indent, status, node_key, node_value):
     prefix = LF_CHAR + INDENT_CHAR * indent
     status_sign = get_status_sign(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
     return '{0}{1}: {2}'.format(prefix, node_key, node_value)
+
+
+def compose_stylish(indent, output):
+    return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)

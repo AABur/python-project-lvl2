@@ -14,7 +14,7 @@ UPDATED_VALUE = 'updated_value'
 
 # * Fixed WPS441, WPS440 to allow variable names to be reused in multiple loops
 # * https://github.com/wemake-services/wemake-python-styleguide/pull/1768#pullrequestreview-550906165 # noqa:E501
-def compile_diff(first_data_set, second_data_set):
+def compose_diff(first_data_set, second_data_set):
     diff = {}
     keys_intersection = first_data_set.keys() & second_data_set.keys()
     for data_key in keys_intersection:
@@ -32,7 +32,7 @@ def compile_diff(first_data_set, second_data_set):
 
 def compare_same_keys(first_value, second_value):
     if isinstance(first_value, dict) and isinstance(second_value, dict):
-        return {STATUS: NESTED, VALUE: compile_diff(first_value, second_value)}
+        return {STATUS: NESTED, VALUE: compose_diff(first_value, second_value)}
     if first_value == second_value:
         return {STATUS: UNCHANGED, VALUE: first_value}
     return {STATUS: UPDATED, VALUE: first_value, UPDATED_VALUE: second_value}
