@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hexlet_code"
+name = "hexlet-code"
 version = "0.4.0"
 description = "Generate diff"
 license = "MIT"
