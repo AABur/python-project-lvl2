@@ -21,14 +21,9 @@ get_status_sign = {
 }.get
 
 
-def format_stylish(diff):
-    return prepare_stylish(sort_diff(diff))
-
-
-# FIXME
-def prepare_stylish(node, indent=0):  # noqa: WPS210
+def format_stylish(node, indent=0):  # noqa: WPS210
     output = []
-    for node_key, node_value in node.items():
+    for node_key, node_value in sorted(node.items()):
         new_indent = indent + INDENT_STEP
         status = node_value.get(STATUS)
         if status == UPDATED:
@@ -38,58 +33,31 @@ def prepare_stylish(node, indent=0):  # noqa: WPS210
             output.append(create_item(new_indent, ADDED, node_key, value))
             continue
         if status == NESTED:
-            value = prepare_stylish(node_value[VALUE], new_indent)
+            value = format_stylish(node_value[VALUE], new_indent)
         else:
             value = format_value(node_value[VALUE], new_indent)
         output.append(create_item(new_indent, status, node_key, value))
     return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)
 
 
-def format_value(value, indent):
-    if isinstance(value, dict):
-        return format_dict(value, indent)
-    if isinstance(value, bool):
-        return str(value).lower()
-    if value is None:
-        return 'null'
-    return str(value)
-
-
-def format_dict(node, indent=0):  # noqa: WPS210
-    output = []
-    for node_key, node_value in node.items():
-        new_indent = indent + INDENT_STEP
-        status = node_value.get(STATUS) if isinstance(node_value, dict) else None  # noqa: E501
-        if status is None:
+def format_value(node, indent):
+    if isinstance(node, dict):
+        output = []
+        for node_key, node_value in node.items():
+            new_indent = indent + INDENT_STEP
             value = format_value(node_value, new_indent)
-        else:
-            value = format_value(node_value[VALUE], new_indent)
-        output.append(create_item(new_indent, status, node_key, value))
-    return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)
+            output.append(create_item(new_indent, None, node_key, value))
+        return '{{{0}}}'.format(''.join(output) + LF_CHAR + INDENT_CHAR * indent)  # noqa: E501
+    if isinstance(node, bool):
+        return str(node).lower()
+    if node is None:
+        return 'null'
+    return str(node)
 
 
 def create_item(indent, status, node_key, node_value):
-    prefix = create_prefix(status, indent)
-    return '{0}{1}: {2}'.format(prefix, node_key, node_value)
-
-
-def create_prefix(status, indent):
     prefix = LF_CHAR + INDENT_CHAR * indent
     status_sign = get_status_sign(status)
     if status_sign:
         prefix = prefix[:-2] + status_sign
-    return prefix
-
-
-def sort_diff(node):
-    sorted_diff = {}
-    for node_key, node_value in sorted(node.items()):
-        status = node_value[STATUS]
-        if status == NESTED:
-            sorted_diff[node_key] = {
-                STATUS: NESTED,
-                VALUE: sort_diff(node_value[VALUE]),
-            }
-        else:
-            sorted_diff[node_key] = node_value
-    return sorted_diff
+    return '{0}{1}: {2}'.format(prefix, node_key, node_value)
