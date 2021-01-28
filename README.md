@@ -28,7 +28,7 @@ pip install --user git+https://github.com/AABur/python-project-lvl2.git
 
 Installation and usage example
 
-[![asciicast](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z.svg)](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z?autoplay=1&speed=3&preload=1)
+[![asciicast](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z.svg)](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z?autoplay=1&speed=2&preload=1&size=medium)
 
 ## Usage
 
@@ -63,15 +63,15 @@ optional arguments:
 
 #### JSON output (-f json)
 
-[![asciicast](https://asciinema.org/a/oYjgH5ty9LhuJqkZQ2p5r5f1f.svg)](https://asciinema.org/a/oYjgH5ty9LhuJqkZQ2p5r5f1f)
+[![asciicast](https://asciinema.org/a/oYjgH5ty9LhuJqkZQ2p5r5f1f.svg)](https://asciinema.org/a/oYjgH5ty9LhuJqkZQ2p5r5f1f?autoplay=1&speed=2&preload=1&size=medium)
 
 #### Structured output (-f stylish)
 
-[![asciicast](https://asciinema.org/a/fSzDpJblOW5alL0uH8yBLJLwP.svg)](https://asciinema.org/a/fSzDpJblOW5alL0uH8yBLJLwP)
+[![asciicast](https://asciinema.org/a/fSzDpJblOW5alL0uH8yBLJLwP.svg)](https://asciinema.org/a/fSzDpJblOW5alL0uH8yBLJLwP?autoplay=1&speed=2&preload=1&size=medium)
 
 #### Plain output (-f plain)
 
-[![asciicast](https://asciinema.org/a/2BBICno6Wr7gt4pVqx4ykOkVy.svg)](https://asciinema.org/a/2BBICno6Wr7gt4pVqx4ykOkVy)
+[![asciicast](https://asciinema.org/a/2BBICno6Wr7gt4pVqx4ykOkVy.svg)](https://asciinema.org/a/2BBICno6Wr7gt4pVqx4ykOkVy?autoplay=1&speed=2&preload=1&size=medium)
 
 ## Contributing
 
