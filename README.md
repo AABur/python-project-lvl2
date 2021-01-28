@@ -28,7 +28,7 @@ pip install --user git+https://github.com/AABur/python-project-lvl2.git
 
 Installation and usage example
 
-[![asciicast](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z.svg)](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z)
+[![asciicast](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z.svg)](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z?autoplay=1?speed=3)
 
 ## Usage
 
