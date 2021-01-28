@@ -63,6 +63,7 @@ optional arguments:
 ### Usage examples
 
 #### JSON output (-f json)
+
 [![asciicast](https://asciinema.org/a/sdpmQxH2aMUQwKmCCIUl49gzn.svg)](https://asciinema.org/a/sdpmQxH2aMUQwKmCCIUl49gzn)
 
 #### Structured output (-f stylish)
