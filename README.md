@@ -23,12 +23,12 @@ Gendiff (GENerator of DIFFerences) - a program defining the difference between t
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install gendiff.
 
 ```bash
-pip install --user --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ AABur_gendiff
+pip install --user git+https://github.com/AABur/python-project-lvl2.git
 ```
 
 Installation and usage example
 
-[![asciicast](https://asciinema.org/a/RfBQHFrCASCMU23WeeAeSKA0J.svg)](https://asciinema.org/a/RfBQHFrCASCMU23WeeAeSKA0J)
+[![asciicast](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z.svg)](https://asciinema.org/a/M7yG5iKJxMMjIwPWR5jWMR46Z)
 
 ## Usage
 
@@ -45,7 +45,7 @@ print(diff)
 
 ```bash
 ❯ gendiff -h
-usage: gendiff [-h] [-f FORMAT] first_file second_file
+usage: gendiff [-h] [-f {json,plain,stylish}] first_file second_file
 
 Generate difference of two JSON or YAML files.
 
@@ -55,24 +55,23 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -f FORMAT, --format FORMAT
-                        set output format ['json', 'plain', 'stylish']
-                        (default: 'stylish')
+  -f {json,plain,stylish}, --format {json,plain,stylish}
+                        set output format (default: 'stylish')
 ```
 
 ### Usage examples
 
 #### JSON output (-f json)
 
-[![asciicast](https://asciinema.org/a/sdpmQxH2aMUQwKmCCIUl49gzn.svg)](https://asciinema.org/a/sdpmQxH2aMUQwKmCCIUl49gzn)
+[![asciicast](https://asciinema.org/a/oYjgH5ty9LhuJqkZQ2p5r5f1f.svg)](https://asciinema.org/a/oYjgH5ty9LhuJqkZQ2p5r5f1f)
 
 #### Structured output (-f stylish)
 
-[![asciicast](https://asciinema.org/a/W1Xb1yNhEbYBLZSYHIa8ALhkV.svg)](https://asciinema.org/a/W1Xb1yNhEbYBLZSYHIa8ALhkV)
+[![asciicast](https://asciinema.org/a/fSzDpJblOW5alL0uH8yBLJLwP.svg)](https://asciinema.org/a/fSzDpJblOW5alL0uH8yBLJLwP)
 
 #### Plain output (-f plain)
 
-[![asciicast](https://asciinema.org/a/0tXY4DIYfArT1hu56Wo6Gwq0u.svg)](https://asciinema.org/a/0tXY4DIYfArT1hu56Wo6Gwq0u)
+[![asciicast](https://asciinema.org/a/2BBICno6Wr7gt4pVqx4ykOkVy.svg)](https://asciinema.org/a/2BBICno6Wr7gt4pVqx4ykOkVy)
 
 ## Contributing
 
