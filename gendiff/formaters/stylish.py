@@ -22,22 +22,22 @@ get_status_sign = {
 
 
 def format_stylish(diff, indent=0):  # noqa: WPS210
-    stylish = []
+    stylish_diff = []
     for diff_key, diff_value in sorted(diff.items()):
         new_indent = indent + INDENT_STEP
         status = diff_value.get(STATUS)
         if status == UPDATED:
             value = format_value(diff_value[VALUE], new_indent)
-            stylish.append(add_prefix(new_indent, REMOVED, diff_key, value))
+            stylish_diff.append(add_prefix(new_indent, REMOVED, diff_key, value))  # noqa: E501
             value = format_value(diff_value[UPDATED_VALUE], new_indent)
-            stylish.append(add_prefix(new_indent, ADDED, diff_key, value))
+            stylish_diff.append(add_prefix(new_indent, ADDED, diff_key, value))
             continue
         if status == NESTED:
             value = format_stylish(diff_value[VALUE], new_indent)
         else:
             value = format_value(diff_value[VALUE], new_indent)
-        stylish.append(add_prefix(new_indent, status, diff_key, value))
-    return compose_stylish(indent, stylish)
+        stylish_diff.append(add_prefix(new_indent, status, diff_key, value))
+    return compose_stylish(indent, stylish_diff)
 
 
 def format_value(value, indent):

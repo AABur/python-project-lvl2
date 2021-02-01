@@ -18,20 +18,20 @@ UPDATED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
 def format_plain(diff):  # noqa:WPS210
-    plain = []
+    plain_diff = []
     for diff_key, diff_value in sorted(flatten(diff).items()):
         status = diff_value[STATUS]
         value = format_value(diff_value[VALUE])
         if status == ADDED:
-            plain.append(ADDED_STR.format(diff_key, value))
+            plain_diff.append(ADDED_STR.format(diff_key, value))
         elif status == REMOVED:
-            plain.append(REMOVED_STR.format(diff_key))
+            plain_diff.append(REMOVED_STR.format(diff_key))
         elif status == UPDATED:
             updated_value = format_value(diff_value[UPDATED_VALUE])
-            plain.append(UPDATED_STR.format(
+            plain_diff.append(UPDATED_STR.format(
                 diff_key, value, updated_value,
             ))
-    return '\n'.join(plain)
+    return '\n'.join(plain_diff)
 
 
 def flatten(node, prefix='', flatt=None):

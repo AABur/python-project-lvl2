@@ -17,7 +17,7 @@ class GendiffFileError(Exception):
     pass  # noqa: WPS420, WPS604
 
 
-call_loader = {
+get_loader = {
     '.json': json.load,
     '.yaml': yaml.safe_load,
     '.yml': yaml.safe_load,
@@ -26,12 +26,12 @@ call_loader = {
 
 def collect_data(file_path):
     _, ext = os.path.splitext(file_path)
-    loader = call_loader(ext.lower())
-    if not loader:
+    call_loader = get_loader(ext.lower())
+    if not call_loader:
         raise GendiffFileError(EXT_ERROR_MSG.format(file_path))
     try:
         with open(file_path) as data_file:
-            return loader(data_file)
+            return call_loader(data_file)
     except ScannerError:
         raise GendiffFileError(YAML_ERROR_MSG.format(file_path))
     except JSONDecodeError:

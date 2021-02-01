@@ -6,7 +6,7 @@ from gendiff.loader import collect_data
 
 
 def generate_diff(first_file, second_file, output_format=DEFAULT_STYLE):
-    first_data_set = collect_data(first_file)
-    second_data_set = collect_data(second_file)
-    diff = compose_diff(first_data_set, second_data_set)
+    first_data = collect_data(first_file)
+    second_data = collect_data(second_file)
+    diff = compose_diff(first_data, second_data)
     return call_formater(diff, output_format)
