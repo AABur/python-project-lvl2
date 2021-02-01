@@ -25,7 +25,7 @@ def format_stylish(diff, indent=0):  # noqa: WPS210
     stylish_diff = []
     for diff_key, diff_value in sorted(diff.items()):
         new_indent = indent + INDENT_STEP
-        status = diff_value.get(STATUS)
+        status = diff_value[STATUS]
         if status == UPDATED:
             value = format_value(diff_value[VALUE], new_indent)
             stylish_diff.append(add_prefix(new_indent, REMOVED, diff_key, value))  # noqa: E501
@@ -42,12 +42,12 @@ def format_stylish(diff, indent=0):  # noqa: WPS210
 
 def format_value(value, indent):
     if isinstance(value, dict):
-        stylish = []
+        stylish_value = []
         for node_key, node_value in value.items():
             new_indent = indent + INDENT_STEP
             value = format_value(node_value, new_indent)
-            stylish.append(add_prefix(new_indent, None, node_key, value))
-        return compose_stylish(indent, stylish)
+            stylish_value.append(add_prefix(new_indent, None, node_key, value))
+        return compose_stylish(indent, stylish_value)
     if isinstance(value, bool):
         return str(value).lower()
     if value is None:

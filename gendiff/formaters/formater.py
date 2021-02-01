@@ -18,8 +18,9 @@ class GendiffFormaterError(Exception):
 
 
 def call_formater(diff, style=DEFAULT_STYLE):
-    if style in FORMATERS:
-        return FORMATERS[style](diff)
+    style = FORMATERS.get(style)
+    if style is not None:
+        return style(diff)
     raise GendiffFormaterError(
         STYLE_ERROR_MSG.format(style, list(FORMATERS.keys())),
     )

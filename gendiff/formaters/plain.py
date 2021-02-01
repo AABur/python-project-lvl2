@@ -35,14 +35,14 @@ def format_plain(diff):  # noqa:WPS210
 
 
 def flatten(node, prefix='', flatt=None):
-    flatted = {} if flatt is None else flatt
+    flatted_node = {} if flatt is None else flatt
     for node_key, node_value in node.items():
         new_key = '{0}.{1}'.format(prefix, node_key) if prefix else node_key
         if node_value[STATUS] == NESTED:
-            flatten(node_value[VALUE], new_key, flatted)
+            flatten(node_value[VALUE], new_key, flatted_node)
         else:
-            flatted[new_key] = node_value
-    return flatted
+            flatted_node[new_key] = node_value
+    return flatted_node
 
 
 def format_value(value):
