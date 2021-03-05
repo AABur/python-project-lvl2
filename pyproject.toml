@@ -22,7 +22,7 @@ wemake-python-styleguide = "^0.14.1"
 pyformat = "^0.7"
 pytest-cov = "^2.10.1"
 pytest = "^6.1.1"
-coverage = "^5.3"
+coverage = "^5.5"
 rope = "^0.18.0"
 
 [build-system]
