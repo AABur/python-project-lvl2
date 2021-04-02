@@ -16,12 +16,10 @@ UPDATED_VALUE = 'updated_value'
 
 
 def compose_diff(first_data_set, second_data_set):
-    diff = {}
     keys_matched = first_data_set.keys() & second_data_set.keys()
-    for key in keys_matched:
-        diff[key] = compare_keys_matched(
+    diff = {key: compare_keys_matched(
             first_data_set[key], second_data_set[key],
-        )
+        ) for key in keys_matched}
     keys_removed = first_data_set.keys() - second_data_set.keys()
     for key in keys_removed:  # noqa:WPS440
         diff[key] = {STATUS: REMOVED, VALUE: first_data_set[key]}  # noqa:WPS441, E501
